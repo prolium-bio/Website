@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="TabLogo.png">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clinical Trials — Prolium Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --prolium-blue:#63c5ed;
+      --prolium-green:#21c036;
+      --text-main:#123e47;
+      --prolium-orange:#FF991C;
+      --prolium-dark:#0e2f36;
+
+      --bg-green-0:#e9f8f0;
+      --bg-green-1:#dbf6e6;
+      --bg-green-2:#b6efce;
+      --bg-green-3:#6ce49a;
+      --bg-green-4:#21c036;
+
+      /* Match index/science */
+      --wave-h: clamp(260px, 22vw, 820px);
+
+      /* Fluid type scale (moderate-aggressive) */
+      --step--1: clamp(0.70rem, 0.35rem + 0.8vw, 1.15rem);
+      --step-0:  clamp(.80rem, 0.40rem + 1.1vw, 1.55rem);
+      --step-1:  clamp(1.20rem, 0.50rem + 1.8vw, 2.20rem);
+      --step-2:  clamp(1.80rem, 0.70rem + 2.90vw, 3.00rem);
+      --step-3:  clamp(2.40rem, 0.80rem + 4.30vw, 5.00rem);
+    }
+
+    html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+    body{
+      margin:0;min-height:100%;
+      color:var(--text-main);
+      font-family:'Inter',Arial,sans-serif;
+      font-size: var(--step-0);
+      line-height:1.6;
+      /* Consistent white top like index/science */
+      background:linear-gradient(180deg, #ffffff 0 120px, var(--bg-green-4) 120px 55%, var(--bg-green-3) 70%, var(--bg-green-2) 100%);
+      background-attachment:local;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      padding-top:80px; /* fixed nav offset */
+    }
+
+    /* NAV — translucent + blur; shadow on scroll (match index/science) */
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px clamp(16px, 3vw, 28px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      position:fixed; top:0; left:0; right:0; z-index:10000; gap:14px;
+      transition: box-shadow .2s ease, background-color .2s ease;
+    }
+    .nav.scrolled{ box-shadow:0 6px 18px rgba(0,0,0,.12); background:rgba(255,255,255,0.86); }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px, 34px + 2.5vw, 72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem, 0.3rem + 1vw, 1.1rem)}
+    /* Smidge smaller nav text like index/science */
+    .nav-links a{
+      font-size: calc(var(--step--1) * 0.92);
+      font-weight:800;letter-spacing:.005em;line-height:1;
+      color:#0b2f39;text-decoration:none;
+      padding:clamp(6px, 4px + .6vw, 10px) clamp(8px, 6px + .7vw, 12px);
+      background:none;border:none;cursor:pointer;border-radius:9999px;
+      transition:background .16s,color .16s;
+    }
+    .nav-links a:hover, .nav-links a.active{background:var(--prolium-green);color:#fff}
+
+    /* Drawer — same as index/science */
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem, 1.2rem + 2.2vw, 2rem);cursor:pointer;border-radius:9999px;}
+    .drawer{
+      position:fixed;top:0;right:-100%;height:100%;
+      width:min(55vw,260px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      transition:right .28s ease;
+      z-index:20000;padding:20px;
+      display:flex;flex-direction:column;gap:.5rem;
+      box-shadow:-4px 0 10px rgba(0,0,0,0.08);
+    }
+    .drawer.open{right:0}
+    .drawer a{
+      color:#0b2f39;text-decoration:none;font-weight:800;
+      text-align:left;font-size:calc(var(--step--1) * 0.92);
+      padding:10px 8px;border-radius:12px
+    }
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    /* HERO — white hero with full-bleed waves (match index/science) */
+    .hero{
+      position:relative;isolation:isolate;
+      min-height:100svh;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;background:white;
+      margin:0;overflow:hidden;
+      margin-top: -15svh;
+    }
+    .hero-content{position:relative;z-index:4;max-width:min(1400px,92vw);padding:0 clamp(12px,3vw,24px)}
+    .hero-title{
+      font-size: clamp(2.4rem, 1.0rem + 4.5vw, 5.0rem);
+      line-height:1.2;font-weight:900;letter-spacing:-0.02em;
+      margin:0 0 10px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25);
+    }
+    .hero-desc{font-size:var(--step-1);color:#21525d;font-weight:700;max-width:min(1200px,90vw);margin:0 auto;line-height:1.55}
+
+    /* WAVES — exact same shapes/animation as index/science */
+    .wave-wrap{position:absolute;left:0;bottom:0;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0);} 
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;margin-bottom: -1svh;}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0);}    
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%;}
+
+    /* CONTENT WRAPPER */
+    .wrap{max-width:1320px;margin:0 auto;padding:0 5vw}
+
+    /* Filter chips + search */
+    .page-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px auto 10px;position:relative;z-index:3}
+    .filter-chip{
+      border:none;border-radius:9999px;padding:8px 14px;
+      font-weight:700;font-size:calc(var(--step--1)*0.95);
+      cursor:pointer;background:rgba(255,255,255,.7);color:#0a3f14;
+    }
+    .filter-chip[aria-pressed="true"]{outline:2px solid #fff;box-shadow:0 0 0 2px rgba(10,63,20,.2) inset}
+    .search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);border-radius:9999px;padding:6px 12px;margin:0 auto;max-width:880px}
+    .search input{border:none;background:transparent;outline:none;font-size:1rem;min-width:220px;color:#0b2f39;width:100%}
+
+    /* Trials grid */
+    .trials{margin:40px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:860px){ .trials{grid-template-columns:1fr} }
+    .lead-note{
+      display:inline-block;margin:0 auto 12px;font-weight:800;color:#0a3f14;
+      background:rgba(255,255,255,.6);border-radius:9999px;padding:7px 12px;
+      font-size:.87rem;text-transform:uppercase;letter-spacing:.08em
+    }
+
+    .trial-card{
+      background:#fff;border-radius:18px;box-shadow:0 8px 28px rgba(0,0,0,.10);
+      padding:18px 18px 14px;display:flex;flex-direction:column;gap:10px;
+      border-left:6px solid var(--prolium-green);
+    }
+    .trial-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .indication{font-weight:800;color:#0b2f39;font-size:1.06rem;letter-spacing:.005em}
+    .phase{font-weight:800;font-size:.92rem;color:#0a3f14;background:rgba(33,192,54,.14);padding:6px 10px;border-radius:9999px;white-space:nowrap}
+
+    .title{font-size:1.02rem;color:#0e3a27;font-weight:600;margin:0}
+    .meta{display:flex;flex-wrap:wrap;gap:8px}
+    .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.7);border-radius:9999px;padding:6px 10px;font-size:.92rem;font-weight:700;color:#0b2f39}
+    .badge.status--recruit{color:#fff;background:#16a34a}
+    .badge.status--planned{color:#fff;background:#f59e0b}
+    .badge.status--complete{color:#fff;background:#0ea5e9}
+    .badge.status--nr{color:#fff;background:#ef4444}
+
+    .locations{font-size:.95rem;color:#0f3b3f}
+    .nct a{color:#064d8b;text-decoration:underline;font-weight:700}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+    .btn{border:none;border-radius:12px;padding:10px 14px;font-weight:800;font-size:.96rem;cursor:pointer}
+    .btn.primary{color:#fff;background:linear-gradient(90deg,#1aa62f,#128d27);box-shadow:0 6px 16px rgba(0,0,0,.14)}
+    .btn.ghost{background:rgba(255,255,255,.7);color:#0a3f14}
+    .btn:hover,.btn:focus{filter:brightness(1.06)}
+
+    /* Details accordion */
+    .details{border-top:1px dashed #d7e5e0;margin-top:10px;padding-top:10px}
+    .toggle{background:none;border:none;color:#0a3f14;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 0}
+    .toggle svg{width:16px;height:16px;transition:transform .15s}
+    .toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+    .detail-body{display:none;color:#0f3b3f;font-weight:500}
+    .detail-body.open{display:block}
+
+    /* CTA — match index */
+    .cta{text-align:center;margin:72px 0 36px}
+    .cta-link{color:#fff;background:linear-gradient(90deg,#1aa62f,#128d27);border:none;border-radius:9999px;font-weight:800;padding:14px 30px;font-size:var(--step--1);cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.14);text-decoration:none;display:inline-block}
+
+    /* Focus ring */
+    .nav-links a:focus-visible,
+    .drawer a:focus-visible,
+    .cta-link:focus-visible,
+    .nav-toggle:focus-visible,
+    .filter-chip:focus-visible,
+    .btn:focus-visible,
+    button:focus-visible {
+      outline:3px solid rgba(99,197,237,.65);
+      outline-offset:2px;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none!important;animation:none!important}
+    }
+    img{max-width:100%;height:auto}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+        <img class="nav-logo" src="Logo.png" alt="Prolium Logo">
+      </a>
+    </div>
+
+    <div class="nav-links" aria-label="Primary links">
+      <a href="index.html">Home</a>
+      <a href="science.html">Science &amp; Pipeline</a>
+      <a href="trials.html" class="active">Clinical Trials</a>
+      <a href="about.html#about">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobile menu">
+      <a href="index.html">Home</a>
+      <a href="science.html">Science &amp; Pipeline</a>
+      <a href="trials.html" class="active">Clinical Trials</a>
+      <a href="about.html#about">About</a>
+      <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" aria-label="Clinical trials">
+    <div class="hero-content">
+      <h1 class="hero-title">Clinical Trials</h1>
+      <p class="hero-desc">Learn about current and upcoming studies.</p>
+    </div>
+
+    <!-- Waves (EXACT shapes used on index/science) -->
+    <div class="wave-wrap" aria-hidden="true">
+      <div class="wave wave--back">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
+          <defs>
+            <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#63c5ed"/>
+              <stop offset="1" stop-color="#9ed4ef"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"/>
+        </svg>
+      </div>
+      <div class="wave wave--front">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540" aria-hidden="true">
+          <path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filters -->
+  <nav class="page-nav" aria-label="Filter trials">
+      <button class="filter-chip" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter-chip" data-filter="recruiting">Recruiting</button>
+      <button class="filter-chip" data-filter="planned">Planned</button>
+      <button class="filter-chip" data-filter="completed">Completed</button>
+  </nav>
+
+  <div class="wrap">
+      <div class="search" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="#0a3f14" stroke-width="2"/>
+          <path d="M20 20l-3.5-3.5" stroke="#0a3f14" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <label for="trialSearch" class="sr-only">Search</label>
+        <input id="trialSearch" type="search" placeholder="Search by condition or NCT…" aria-label="Search trials">
+      </div>
+  </div>
+
+  <!-- TRIALS -->
+  <main class="wrap" id="all">
+    <div class="lead-note">This page is for illustrative purposes only and will not be published in the initial site launch. All trials are placeholders and will be updated as they are announced</div>
+    <section class="trials" id="active" aria-label="Active trials">
+      <!-- CARD 1 -->
+      <article class="trial-card" data-status="recruiting" data-phase="2" data-tags="autoimmune, b-cell" data-nct="NCT00000001">
+        <div class="trial-head">
+          <div class="indication">Autoimmune Indication — Study A</div>
+          <div class="phase">Phase 2</div>
+        </div>
+        <h3 class="title">A randomized, double-blind study evaluating PRO-203 in patients with [Indication]</h3>
+        <div class="meta">
+          <span class="badge status--recruit">Recruiting</span>
+          <span class="badge nct">NCT: <a href="#" target="_blank" rel="noopener">NCT00000001</a></span>
+          <span class="badge">IV &amp; SC</span>
+        </div>
+        <div class="locations">Locations: TBD (multi-center)</div>
+
+        <div class="actions">
+          <button class="btn ghost toggle" aria-expanded="false" aria-controls="d1">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="#0a3f14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div id="d1" class="detail-body" hidden>
+          <div class="details">
+            <p><strong>Overview:</strong> Safety, tolerability, PK/PD, and preliminary activity of PRO-203 in [Indication].</p>
+            <p><strong>Key criteria (example):</strong> Adults 18–75; diagnosis of [Indication]; additional details TBD.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="trial-card" data-status="planned" data-phase="2" data-tags="autoimmune, t-cell" data-nct="NCT00000002">
+        <div class="trial-head">
+          <div class="indication">Autoimmune Indication — Study B</div>
+          <div class="phase">Phase 2</div>
+        </div>
+        <h3 class="title">A phase 2 study of PRO-203 in [Indication] — subcutaneous cohort</h3>
+        <div class="meta">
+          <span class="badge status--planned">Planned</span>
+          <span class="badge nct">NCT: <a href="#" target="_blank" rel="noopener">NCT00000002</a></span>
+          <span class="badge">SC</span>
+        </div>
+        <div class="locations">Locations: TBD (US/EU planned)</div>
+
+        <div class="actions">
+          <button class="btn ghost toggle" aria-expanded="false" aria-controls="d2">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="#0a3f14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div id="d2" class="detail-body" hidden>
+          <div class="details">
+            <p><strong>Overview:</strong> Dose selection and regimen optimization for SC formulation in [Indication].</p>
+            <p><strong>Start:</strong> TBD • <strong>Enrollment:</strong> TBD</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="trial-card" data-status="completed" data-phase="1" data-tags="oncology, reference" data-nct="NCT00000003">
+        <div class="trial-head">
+          <div class="indication">R/R NHL (reference)</div>
+          <div class="phase">Phase 1/2</div>
+        </div>
+        <h3 class="title">Evaluation of ICP-B02 (CD20×CD3) — early clinical experience (China)</h3>
+        <div class="meta">
+          <span class="badge status--complete">Completed/Readout</span>
+          <span class="badge nct">NCT: <a href="#" target="_blank" rel="noopener">NCT00000003</a></span>
+          <span class="badge">IV &amp; SC</span>
+        </div>
+        <div class="locations">Locations: China (multi-center)</div>
+
+        <div class="actions">
+          <a class="btn ghost" href="#" target="_blank" rel="noopener">Summary (TBD)</a>
+          <button class="btn ghost toggle" aria-expanded="false" aria-controls="d3">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="#0a3f14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div id="d3" class="detail-body" hidden>
+          <div class="details">
+            <p><strong>Overview:</strong> Safety, tolerability, PK, and preliminary anti-tumor activity including FL/DLBCL cohorts.</p>
+            <p><strong>Note:</strong> Reference study to inform autoimmune development strategy.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="trial-card" data-status="planned" data-phase="2" data-tags="autoimmune" data-nct="NCT00000004">
+        <div class="trial-head">
+          <div class="indication">Autoimmune Indication — Study C</div>
+          <div class="phase">Phase 2</div>
+        </div>
+        <h3 class="title">PRO-203 in [Indication] — randomized dose-ranging study</h3>
+        <div class="meta">
+          <span class="badge status--planned">Planned</span>
+          <span class="badge nct">NCT: <a href="#" target="_blank" rel="noopener">NCT00000004</a></span>
+        </div>
+        <div class="actions">
+          <button class="btn ghost toggle" aria-expanded="false" aria-controls="d4">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="#0a3f14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div id="d4" class="detail-body" hidden>
+          <div class="details">
+            <p>Details coming soon.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="trial-card" data-status="nr" data-phase="1" data-tags="autoimmune" data-nct="NCT00000005">
+        <div class="trial-head">
+          <div class="indication">Autoimmune Indication — Study D</div>
+          <div class="phase">Phase 1</div>
+        </div>
+        <h3 class="title">First-in-patient study of PRO-203 in [Indication]</h3>
+        <div class="meta">
+          <span class="badge status--nr">Not yet recruiting</span>
+          <span class="badge nct">NCT: <a href="#" target="_blank" rel="noopener">NCT00000005</a></span>
+        </div>
+        <div class="actions">
+          <button class="btn ghost toggle" aria-expanded="false" aria-controls="d5">
+            Details
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="#0a3f14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div id="d5" class="detail-body" hidden>
+          <div class="details">
+            <p>Details coming soon.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" aria-label="Contact Prolium">
+      <a class="cta-link" href="contact.html">Contact Prolium</a>
+    </section>
+  </main>
+
+  <script>
+    // Mobile drawer
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // Fixed-nav shadow on scroll
+    const nav = document.querySelector('.nav');
+    const setShadow = () => {
+      if (window.scrollY > 4) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+
+    // Details toggles
+    document.querySelectorAll('.toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.getAttribute('aria-controls');
+        const body = document.getElementById(id);
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        if(body){
+          body.hidden = expanded;
+          body.classList.toggle('open', !expanded);
+        }
+      });
+    });
+
+    // Filters + search
+    const chips = document.querySelectorAll('.filter-chip');
+    const cards = document.querySelectorAll('.trial-card');
+    const search = document.getElementById('trialSearch');
+
+    function applyFilters(){
+      const active = document.querySelector('.filter-chip[aria-pressed="true"]')?.dataset.filter || 'all';
+      const q = (search.value || '').trim().toLowerCase();
+
+      cards.forEach(card=>{
+        const status = card.dataset.status; // recruiting|planned|completed|nr
+        const nct = (card.dataset.nct || '').toLowerCase();
+        const txt = (card.textContent || '').toLowerCase();
+
+        const statusOk = (active === 'all') ||
+                         (active === 'recruiting' && status === 'recruiting') ||
+                         (active === 'planned' && (status === 'planned' || status === 'nr')) ||
+                         (active === 'completed' && (status === 'completed' || status === 'complete'));
+
+        const textOk = !q || txt.includes(q) || nct.includes(q);
+
+        card.style.display = (statusOk && textOk) ? '' : 'none';
+      });
+    }
+
+    chips.forEach(ch=>{
+      ch.addEventListener('click', ()=>{
+        chips.forEach(b=>b.setAttribute('aria-pressed','false'));
+        ch.setAttribute('aria-pressed','true');
+        applyFilters();
+      });
+    });
+    search.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>

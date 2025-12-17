@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="TabLogo.png">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Prolium Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --prolium-blue:#63c5ed;
+      --prolium-green:#21c036;
+      --text-main:#123e47;
+      --prolium-dark:#0e2f36;
+      --prolium-orange:#FF991C;
+
+      --bg-green-0:#e9f8f0;
+      --bg-green-1:#dbf6e6;
+      --bg-green-2:#b6efce;
+      --bg-green-3:#6ce49a;
+      --bg-green-4:#21c036;
+
+      /* Match index/science/about waves */
+      --wave-h: clamp(260px, 22vw, 820px);
+
+      /* ===== Gentle fluid type scale (site-wide) ===== */
+      --step--1: clamp(0.85rem, 0.72rem + 0.20vw, 1.00rem);
+      --step-0:  clamp(0.95rem, 0.80rem + 0.35vw, 1.15rem);
+      --step-1:  clamp(1.10rem, 0.90rem + 0.60vw, 1.35rem);
+      --step-2:  clamp(1.35rem, 1.00rem + 1.00vw, 1.85rem);
+      --step-3:  clamp(1.80rem, 1.10rem + 1.60vw, 2.60rem);
+    }
+
+    html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+
+    body{
+      margin:0;min-height:100%;
+      color:var(--text-main);
+      font-family:'Inter',Arial,sans-serif;
+      font-size: var(--step-0);
+      line-height:1.6;
+      /* Consistent white top like index/science */
+      background:linear-gradient(180deg, #ffffff 0 120px, var(--bg-green-4) 120px 55%, var(--bg-green-3) 70%, var(--bg-green-2) 100%);
+      background-attachment:local;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      padding-top:80px; /* fixed nav offset */
+    }
+
+    /* NAV — translucent + blur; shadow on scroll (same as index/science) */
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px clamp(16px, 3vw, 28px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      position:fixed; top:0; left:0; right:0; z-index:10000; gap:14px;
+      transition: box-shadow .2s ease, background-color .2s ease;
+    }
+    .nav.scrolled{ box-shadow:0 6px 18px rgba(0,0,0,.12); background:rgba(255,255,255,0.86); }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px, 34px + 2.5vw, 72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem, 0.3rem + 1vw, 1.1rem)}
+    .nav-links a{
+      font-size: calc(var(--step--1) * 1.15);
+      font-weight:800;letter-spacing:.005em;line-height:1;
+      color:#0b2f39;text-decoration:none;
+      padding:clamp(6px, 4px + .6vw, 10px) clamp(8px, 6px + .7vw, 12px);
+      background:none;border:none;cursor:pointer;border-radius:9999px;
+      transition:background .16s,color .16s;
+    }
+    .nav-links a:hover, .nav-links a.active{background:var(--prolium-green);color:#fff}
+
+    /* Drawer — same as index/science */
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem, 1.2rem + 2.2vw, 2rem);cursor:pointer;border-radius:9999px;}
+    .drawer{
+      position:fixed;top:0;right:-100%;height:100%;
+      width:min(55vw,260px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      transition:right .28s ease;
+      z-index:20000;padding:20px;
+      display:flex;flex-direction:column;gap:.5rem;
+      box-shadow:-4px 0 10px rgba(0,0,0,0.08);
+    }
+    .drawer.open{right:0}
+    .drawer a{
+      color:#0b2f39;text-decoration:none;font-weight:800;
+      text-align:left;font-size:calc(var(--step--1) * 0.92);
+      padding:10px 8px;border-radius:12px
+    }
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    /* HERO — white hero with full-bleed waves (match index/science) */
+    .hero{
+      position:relative;isolation:isolate;
+      min-height:100svh;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;background:white;
+      margin:0;overflow:hidden;
+      margin-top:-15svh;
+    }
+    .hero-content{position:relative;z-index:4;max-width:min(1400px,92vw);padding:0 clamp(12px,3vw,24px)}
+    /* Bigger hero title to match the other pages */
+    .hero-title{
+      font-size: clamp(2.8rem, 1.6rem + 3.5vw, 4.6rem);
+      line-height:1.12;font-weight:900;letter-spacing:-0.02em;
+      margin:0 0 10px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25);
+    }
+    /* Make the hero description track section desc sizing */
+    .hero-desc{
+      font-size: clamp(1.05rem, 0.92rem + 0.70vw, 1.35rem);
+      color:#21525d;font-weight:700;max-width:min(1200px,90vw);margin:0 auto;line-height:1.6
+    }
+
+    /* WAVES — EXACT shapes/animation as index/science */
+    .wave-wrap{position:absolute;left:0;bottom:0;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0);} 
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;margin-bottom:-1svh;}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0);}    
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%;}
+
+    /* WRAPPER */
+    .wrap{max-width:1420px;margin:0 auto;padding:0 5vw}
+
+    /* CONTACT PANEL */
+    .contact-panel{margin:40px auto 80px;display:grid;grid-template-columns:1fr}
+    .panel{
+      background:rgba(255,255,255,.9);
+      border-radius:20px;
+      box-shadow:0 8px 26px rgba(0,0,0,.10);
+      border-left:6px solid var(--prolium-green);
+      padding:20px 20px 18px;
+      max-width:1100px;
+      margin:0 auto;
+    }
+    .panel h2{
+      margin:0 0 10px;
+      font-size: clamp(1.4rem, 1.05rem + 0.9vw, 1.9rem);
+      font-weight:900;color:#0b2f39;text-align:center;
+      text-shadow:0 1px 0 rgba(255,255,255,.25)
+    }
+    .info{display:grid;gap:10px;justify-content:center}
+    .row{display:flex;gap:10px;align-items:flex-start}
+    .label{min-width:110px;font-weight:800;color:#0a3f14}
+    .value a{color:#064d8b;font-weight:800;text-decoration:underline}
+
+    /* TEAM PHOTO */
+    .team-photo {
+      display:flex;justify-content:center;align-items:center;
+      width:100%;margin:0 auto 60px;text-align:center;
+    }
+    .team-photo img {
+      width:75%;max-width:1000px;height:auto;display:block;margin:0 auto;
+      border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,0.14);
+    }
+
+    /* Focus ring */
+    .nav-links a:focus-visible,
+    .drawer a:focus-visible,
+    .nav-toggle:focus-visible,
+    .panel a:focus-visible,
+    button:focus-visible {
+      outline:3px solid rgba(99,197,237,.65);
+      outline-offset:2px;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none!important;animation:none!important}
+    }
+    img{max-width:100%;height:auto}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+        <img class="nav-logo" src="Logo.png" alt="Prolium Logo">
+      </a>
+    </div>
+
+    <div class="nav-links" aria-label="Primary links">
+      <a href="index.html">Home</a>
+      <a href="science.html">Science &amp; Pipeline</a>
+      <!--<a href="trials.html">Clinical Trials</a>-->
+      <a href="about.html#about">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobile menu">
+    <a href="index.html">Home</a>
+    <a href="science.html">Science &amp; Pipeline</a>
+    <!--<a href="trials.html">Clinical Trials</a>-->
+    <a href="about.html#about">About</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" aria-label="Contact Prolium">
+    <div class="hero-content">
+      <h1 class="hero-title">Get in Touch</h1>
+      <p class="hero-desc">For general inquiries, email us anytime.</p>
+    </div>
+
+    <!-- Waves -->
+    <div class="wave-wrap" aria-hidden="true">
+      <div class="wave wave--back">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
+          <defs>
+            <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#63c5ed"/>
+              <stop offset="1" stop-color="#9ed4ef"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"/>
+        </svg>
+      </div>
+      <div class="wave wave--front">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540" aria-hidden="true">
+          <path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTACT INFO -->
+  <main class="wrap">
+    <section class="contact-panel" aria-labelledby="contact-title">
+      <article class="panel">
+        <h2 id="contact-title">Contact Information</h2>
+        <div class="info">
+          <div class="row">
+            <div class="label">Address</div>
+            <div class="value">
+              Prolium Bioscience, Inc.<br>
+              40 West 10th Avenue, 7th Floor<br>
+              New York, NY 10014
+            </div>
+          </div>
+          <div class="row">
+            <div class="label">Email</div>
+            <div class="value"><a href="mailto:info@proliumbio.com">info@proliumbio.com</a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- TEAM PHOTO -->
+  <section class="team-photo" aria-label="Our team">
+    <figure>
+      <img src="TeamPic.jpg" alt="Prolium team group photo with skyline">
+    </figure>
+  </section>
+
+  <script>
+    // Mobile drawer
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // Fixed-nav shadow on scroll
+    const nav = document.querySelector('.nav');
+    const setShadow = () => {
+      if (window.scrollY > 4) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+  </script>
+</body>
+</html>

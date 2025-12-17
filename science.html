@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="TabLogo.png">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Science & Pipeline — Prolium Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --prolium-blue:#63c5ed;
+      --prolium-green:#21c036;
+      --text-main:#123e47;
+      --prolium-orange:#FF991C;
+      --prolium-dark:#0e2f36;
+      --bg-green-0:#e9f8f0;
+      --bg-green-1:#dbf6e6;
+      --bg-green-2:#b6efce;
+      --bg-green-3:#6ce49a;
+      --bg-green-4:#21c036;
+      --hero-nudge: -15svh;
+
+      /* Match site wave height */
+      --wave-h: clamp(260px, 22vw, 820px);
+
+      /* ===== Gentle fluid type scale (matches index/about) ===== */
+      --step--1: clamp(0.85rem, 0.72rem + 0.20vw, 1.00rem);
+      --step-0:  clamp(0.95rem, 0.80rem + 0.35vw, 1.15rem);
+      --step-1:  clamp(1.10rem, 0.90rem + 0.60vw, 1.35rem);
+      --step-2:  clamp(1.35rem, 1.00rem + 1.00vw, 1.85rem);
+      --step-3:  clamp(1.80rem, 1.10rem + 1.60vw, 2.60rem);
+    }
+
+    html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+    body{
+      margin:0;
+      min-height:100%;
+      color:var(--text-main);
+      font-family:'Inter',Arial,sans-serif;
+      font-size: var(--step-0);
+      line-height:1.6;
+      background: linear-gradient(180deg, #ffffff 0 120px, var(--bg-green-4) 120px 55%, var(--bg-green-3) 70%, var(--bg-green-2) 100%);
+      background-attachment:local;
+      overflow-x:hidden;
+      padding-top:80px; /* fixed nav offset */
+      scroll-behavior:smooth;
+    }
+
+    /* NAV — identical to index (translucent + blur, shadow on scroll) */
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px clamp(16px, 3vw, 28px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      position:fixed; top:0; left:0; right:0; z-index:10000; gap:14px;
+      transition: box-shadow .2s ease, background-color .2s ease;
+    }
+    .nav.scrolled{ box-shadow:0 6px 18px rgba(0,0,0,.12); background:rgba(255,255,255,0.86); }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px, 34px + 2.5vw, 72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem, 0.3rem + 1vw, 1.1rem);position:relative}
+    .nav-links a{
+      font-size: calc(var(--step--1) * 1.15);
+      font-weight:800;letter-spacing:.005em;line-height:1;
+      color:#0b2f39;text-decoration:none;
+      padding:clamp(6px, 4px + .6vw, 10px) clamp(8px, 6px + .7vw, 12px);
+      background:none;border:none;cursor:pointer;border-radius:9999px;
+      transition:background .16s,color .16s;
+    }
+    .nav-links a:hover, .nav-links a.active{background:var(--prolium-green);color:#fff}
+
+    /* Drawer — same styling/behavior as index */
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem, 1.2rem + 2.2vw, 2rem);cursor:pointer;border-radius:9999px;padding:2px 8px;}
+    .drawer{
+      position:fixed;top:0;right:-100%;height:100%;
+      width:min(55vw,260px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      transition:right .28s ease;
+      z-index:20000;padding:20px;
+      display:flex;flex-direction:column;gap:.5rem;
+      box-shadow:-4px 0 10px rgba(0,0,0,0.08);
+    }
+    .drawer.open{right:0}
+    .drawer a{
+      color:#0b2f39;text-decoration:none;font-weight:800;
+      text-align:left;font-size:calc(var(--step--1) * 0.92);
+      padding:10px 8px;border-radius:12px
+    }
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    /* HERO — mirror index (white hero w/ waves) */
+    .hero{
+      position:relative;isolation:isolate;
+      min-height:100svh;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;background:#ffffff;
+      margin:0;overflow:hidden;
+      margin-top: var(--hero-nudge);
+    }
+    .hero-content{position:relative;z-index:4;max-width:min(1400px,92vw);padding:0 clamp(12px,3vw,24px);}
+    /* Bigger hero title (matches About/index overrides) */
+    .hero-title{
+      font-size: clamp(2.8rem, 1.6rem + 3.5vw, 4.6rem);
+      line-height:1.12;font-weight:900;letter-spacing:-0.02em;
+      margin:0 0 14px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25);
+    }
+
+    /* Page chips under hero */
+    .page-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-10px auto 10px;position:relative;z-index:3}
+    .page-chip{
+      font-weight:800;color:#0a3f14;background:rgba(255,255,255,.7);
+      padding:8px 14px;font-size:calc(var(--step--1)*0.95);
+      text-transform:uppercase;letter-spacing:.06em;text-decoration:none;border-radius:9999px;
+    }
+    .page-chip:hover{filter:brightness(1.03);color:var(--prolium-green)}
+
+    /* WAVES — match index */
+    .wave-wrap{position:absolute;left:0;bottom:0;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0);} 
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;margin-bottom:-1svh;}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0);}    
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%;}
+
+    /* WRAPPER */
+    .wrap{max-width:1420px;margin:0 auto;padding:0 5vw}
+
+    /* ===== Sections — align to site scale ===== */
+    .section-title{
+      /* matches your updated heading bump */
+      font-size: clamp(1.6rem, 1.1rem + 1.2vw, 2.2rem);
+      margin:0 auto clamp(8px, 1vh, 18px);
+      color:var(--prolium-dark);font-weight:900;letter-spacing:-0.01em;
+      text-align:center;width:fit-content;
+    }
+    .section-desc,.lead-blurb{
+      /* larger descriptions to match About/index */
+      font-size: clamp(1.05rem, 0.92rem + 0.70vw, 1.35rem);
+      color:var(--prolium-dark);font-weight:700;
+      max-width:min(1200px,90vw);margin:0 auto;line-height:1.6;
+      text-align:left;
+    }
+
+    .spacer{ height: 1svh; }
+
+    /* HOW / STEPS (kept interactivity/look) */
+    .how{margin:clamp(64px,8vh,96px) auto 0;text-align:center}
+    .how-title{font-size:var(--step-2);color:#0b2f39;font-weight:800;margin:0 0 16px;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+    .steps{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;position:relative}
+    .step{flex:1 1 240px;max-width:400px;min-width:220px;text-align:center}
+    .ico{width:78px;height:78px;border-radius:50%;background:radial-gradient(closest-side,#ffffff 0%,#ffffffcc 60%,#ffffff00 100%);display:grid;place-items:center;margin:0 auto 10px;box-shadow:0 8px 26px rgba(0,0,0,.12)}
+    .ico svg{width:40px;height:40px}
+    .step h3{font-size:calc(var(--step--1)*1.05);font-weight:800;color:#0a3f14;margin:8px 0 6px;letter-spacing:.01em}
+    .step p{font-size:var(--step--1);font-weight:600;color:#0f3b3f;margin:0}
+    .steps::before{content:"";position:absolute;top:39px;left:6%;right:6%;height:3px;background:linear-gradient(90deg, rgba(255,255,255,.0), rgba(255,255,255,.7), rgba(255,255,255,.0));border-radius:3px;pointer-events:none}
+    @media (max-width:760px){ .steps::before{display:none} }
+
+    /* WHY */
+    .why{margin:clamp(64px,8vh,96px) auto 0}
+    .why-title{font-size:var(--step-2);color:#0b2f39;font-weight:800;margin:0 0 14px;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+    .why-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .why-item{display:flex;gap:10px;align-items:flex-start}
+    .tick{flex:0 0 28px;height:28px;display:grid;place-items:center;background:rgba(255,255,255,.75);box-shadow:0 4px 16px rgba(0,0,0,.12);border-radius:9999px}
+    .tick svg{width:16px;height:16px}
+    .why-item p{margin:0;font-weight:700;color:#0e3a27;line-height:1.6}
+    @media (max-width:940px){ .why-list{grid-template-columns:1fr 1fr} }
+    @media (max-width:600px){ .why-list{grid-template-columns:1fr} }
+
+    /* PIPELINE */
+    .pipeline{margin:clamp(80px,9vh,110px) auto 0;text-align:center}
+    .pipeline .section-kicker{display:inline-block;margin:0 auto 12px;font-weight:800;color:#0a3f14;background:rgba(255,255,255,.6);padding:7px 12px;font-size:calc(var(--step--1)*0.82);text-transform:uppercase;letter-spacing:.08em;border-radius:9999px}
+    .pipeline .checks{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+    .pipeline .check{display:flex;gap:10px;align-items:flex-start}
+    .pipeline .tick{flex:0 0 28px;height:28px;display:grid;place-items:center;background:rgba(255,255,255,.75);box-shadow:0 4px 16px rgba(0,0,0,.12);border-radius:9999px}
+    .pipeline .tick svg{width:16px;height:16px}
+    .pipeline .check p{margin:0;font-weight:700;color:#0e3a27;line-height:1.6}
+    @media (max-width:800px){ .pipeline .checks{grid-template-columns:1fr} }
+
+    /* CTA */
+    .cta{text-align:center;margin:72px 0 36px}
+    .cta-link{
+      color:#fff;background:linear-gradient(90deg,#1aa62f,#128d27);
+      font-weight:800;padding:14px 30px;font-size:var(--step--1);
+      text-decoration:none;display:inline-block;border-radius:9999px;
+    }
+
+    /* Focus */
+    .nav-links a:focus-visible,
+    .drawer a:focus-visible,
+    .cta-link:focus-visible,
+    .nav-toggle:focus-visible,
+    .page-chip:focus-visible{
+      outline: 3px solid rgba(99,197,237,.65);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *{animation:none!important;transition:none!important}
+    }
+    img{max-width:100%;height:auto}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+        <img class="nav-logo" src="Logo.png" alt="Prolium Logo">
+      </a>
+    </div>
+    <div class="nav-links" aria-label="Primary links">
+      <a href="index.html">Home</a>
+      <a href="science.html" class="active">Science &amp; Pipeline</a>
+      <!--<a href="trials.html">Clinical Trials</a>-->
+      <a href="about.html#about">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  </nav>
+
+  <!-- Drawer -->
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobile menu">
+    <a href="index.html">Home</a>
+    <a href="science.html" class="active">Science &amp; Pipeline</a>
+    <!--<a href="trials.html">Clinical Trials</a>-->
+    <a href="about.html#about">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" aria-label="Science overview">
+    <div class="hero-content">
+      <h1 class="hero-title">Science and Pipeline</h1>
+      <nav class="page-nav" aria-label="On this page">
+        <a class="page-chip" href="#pipeline">Pipeline</a>
+        <a class="page-chip" href="#phase12">Phase I/II Results</a>
+        <a class="page-chip" href="#TCE">TCE Overview</a>
+      </nav>
+    </div>
+
+    <!-- Waves -->
+    <div class="wave-wrap" aria-hidden="true">
+      <div class="wave wave--back">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
+          <defs>
+            <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#63c5ed"/>
+              <stop offset="1" stop-color="#9ed4ef"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"/>
+        </svg>
+      </div>
+      <div class="wave wave--front">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540" aria-hidden="true">
+          <path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="wrap">
+    <!-- PIPELINE -->
+    <section class="spacer" id="pipeline"></section>
+    <section class="pipeline" aria-label="Pipeline">
+      <h2 class="section-title">Pipeline</h2>
+      <p class="lead-blurb">
+        Prolium’s first asset is PRO-203, a CD20xCD3 bispecific antibody. It works by binding
+        both CD20, a protein that is broadly expressed on the surface of B-cells, and CD3,
+        which is part of the T-cell receptor complex on T cells and is crucial for T-cell activation.
+        Physically linking T-cells to B-cells causes T-cells to release cytotoxic molecules to kill
+        the B-cell, even though the T-cell might not otherwise ordinarily recognize the B-cell as
+        a target. <br><br>
+        Originally developed by InnoCare and Keymed, PRO-203 was first studied in relapsed /
+        refractory Non-Hodgkin’s lymphoma (NHL). Prolium plans to develop PRO-203,
+        administered subcutaneously, for severe autoimmune diseases that are driven
+        predominantly by aberrant B-cells.<br><br>
+        Prolium is actively evaluating additional therapies that have the potential to treat severe
+        autoimmune disease.
+      </p>
+
+      <section class="spacer" id="phase12"></section>
+      <div class="evidence" aria-label="Phase I/II (China) snapshot" style="margin-top:10%">
+        <h3 class="section-title" style="margin-top:24px">Phase I/II snapshot (ICP-B02, China)</h3>
+        <div class="checks">
+          <div class="check">
+            <div class="tick" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p>Phase I/II clinical trial in Relapsed and Refractory Non-Hodgkin’s lymphoma(NHL); conducted by InnoCare and Keymed (ICP-B02/CM355)</p>
+          </div>
+          <div class="check">
+            <div class="tick" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p>Promising early results, particularly in follicular lymphoma (FL) and diffuse large B-cell lymphoma (DLBCL)</p>
+          </div>
+          <div class="check">
+            <div class="tick" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p>Assessed safety, tolerability, PK, and preliminary anti-tumor activity</p>
+          </div>
+          <div class="check">
+            <div class="tick" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p>Evaluated both IV and SC formulations</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- T-Cell Engagers -->
+    <section class="spacer" id="TCE"></section>
+    <section class="tce" aria-label="T-Cell Engagers" style="margin:clamp(64px,8vh,96px) auto 0">
+      <header class="tce-header" style="max-width:min(1200px,90vw);margin:0 auto 14px;text-align:left">
+        <h2 class="section-title" style="text-align:left;margin:0">The Potential of T-Cell Engagers as a Therapeutic Approach</h2>
+      </header>
+
+      <p class="section-desc" style="text-align:left">
+        T-cell engagers (TCEs) are engineered, bispecific antibodies that redirect T-cells to eliminate cells expressing a specific antigen. While initially pioneered in oncology to destroy tumor cells, TCEs are now being explored for autoimmune diseases, where the goal is to selectively deplete pathogenic immune cells.
+      </p>
+
+      <p class="section-desc" style="text-align:left">
+        <br>TCEs are typically bispecific antibodies or antibody fragments designed with:
+      </p>
+
+      <div class="tce-list-wrap" style="max-width:min(1200px,90vw);margin:8px auto 12px">
+        <ul class="tce-list" style="margin:0 0 0 1.1rem;padding:0;display:block;list-style:disc;font-size:clamp(1.05rem, 0.92rem + 0.70vw, 1.35rem);color:var(--prolium-dark);font-weight:700;line-height:1.6;">
+          <li><strong>One arm binding CD3</strong>: a component of the T-cell receptor (TCR) complex on all T-cells.</li>
+          <li><strong>One arm binding a disease-relevant target antigen</strong>, such as CD20 or CD19, expressed on B-cells.</li>
+        </ul>
+      </div>
+
+      <p class="section-desc" style="text-align:left">
+        <br>When both arms engage their targets simultaneously, the TCE forms an immune synapse between the T-cell and the target cell, triggering T-cell activation, release of cytotoxic granules, and targeted killing of the bound cell — independent of MHC or traditional antigen recognition.
+      </p>
+
+      <p class="section-desc" style="text-align:left">
+        <br>T-cell engagers offer a transformative approach for autoimmunity by enabling precision depletion of disease-driving cells. By targeting well-validated antigens, TCEs may combine the potency of cellular immunotherapy with the precision of biologics — ushering in a new class of therapies for patients unresponsive to conventional immunosuppressants.
+      </p>
+    </section>
+
+    <div class="cta" aria-label="Contact Prolium" style="text-align:center;margin:72px 0 36px">
+      <a class="cta-link" href="contact.html">Contact Prolium</a>
+    </div>
+  </main>
+
+  <script>
+    // Mobile drawer (same behavior as index)
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // Fixed nav shadow on scroll (same as index)
+    const nav = document.querySelector('.nav');
+    const setShadow = () => {
+      if (window.scrollY > 4) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+  </script>
+</body>
+</html>
