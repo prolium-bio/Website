@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prolium Bio — Coming Soon</title>
+  <link rel="icon" type="image/png" href="TabLogo.png">
+
+  <style>
+    :root{
+      --prolium-blue:#74ADD6;
+      --prolium-green:#21c036;
+      --prolium-dark:#0e2f36;
+      --wave-h: clamp(260px, 22vw, 820px);
+    }
+
+    *{ box-sizing:border-box; }
+
+    html, body{
+      height:100%;
+      margin:0;
+    }
+
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--prolium-dark);
+      background:#fff; /* IMPORTANT: keep the page white like your other pages */
+      overflow:hidden;
+    }
+
+    .hero{
+      position:relative;
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:#fff;  /* IMPORTANT: keep the hero white */
+      overflow:hidden;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:4;
+      max-width:min(1200px,92vw);
+      padding:0 clamp(12px,3vw,24px);
+      transform: translateY(-2vh);
+    }
+
+    .logo{
+      width: clamp(140px, 18vw, 220px);
+      height:auto;
+      display:block;
+      margin:0 auto 22px;
+    }
+
+    .title{
+      margin:0;
+      font-weight:900;
+      letter-spacing:-0.02em;
+      color:#0e2f36;
+      font-size: clamp(2.6rem, 2.0rem + 3.0vw, 4.2rem);
+      line-height:1.1;
+    }
+
+    .sub{
+      margin:14px 0 0;
+      font-weight:800;
+      color:#0e2f36;
+      opacity:.9;
+      font-size: clamp(1.0rem, 0.85rem + 0.8vw, 1.25rem);
+    }
+
+    /* Waves (bottom pinned, like your About page) */
+    .wave-wrap{
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:100%;
+      height:var(--wave-h);
+      z-index:1;
+      pointer-events:none;
+      overflow:hidden;
+      transform:translateZ(0);
+    }
+
+    .wave{
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:100%;
+      height:100%;
+      margin-bottom:-1svh;
+    }
+
+    .wave svg{
+      display:block;
+      width:100%;
+      height:100%;
+      transform:translateZ(0);
+    }
+
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%}
+
+    @media (prefers-reduced-motion:reduce){
+      .wave--back svg, .wave--front svg{animation:none}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero" aria-label="Prolium Bio Coming Soon">
+    <div class="hero-content">
+      <img class="logo" src="Logo.png" alt="Prolium Bio logo">
+      <h1 class="title">Coming Soon</h1>
+      <div class="sub">Prolium Bio</div>
+    </div>
+
+    <div class="wave-wrap" aria-hidden="true">
+      <div class="wave wave--back">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
+          <defs>
+            <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#63c5ed"/>
+              <stop offset="1" stop-color="#9ed4ef"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z"
+                fill="url(#bgBlue)"/>
+        </svg>
+      </div>
+
+      <div class="wave wave--front">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
+          <path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z"
+                fill="#21c036"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+</body>
+</html>

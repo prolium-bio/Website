@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      --prolium-blue:#74ADD6;
+      --prolium-blue:#74add6;
       --prolium-green:#21c036;
       --prolium-dark:#0e2f36;
       --text-main:#123e47;
@@ -189,15 +189,16 @@
     /* Avatar */
 /* Replace current .avatar-img with this */
     .avatar-img{
-      width: max(190px);
-      height: max(190px);
-      object-fit:cover;
-      border-radius:50%;
-      box-shadow:0 4px 20px rgba(0,0,0,.12);
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(0,0,0,.12);
       margin-bottom: clamp(6px, 1vw, 10px);
-      border:6px solid var(--prolium-blue);
-      background:#fff;
+      border: 6px solid var(--prolium-blue);
+      background: #fff;
     }
+
 
     /* Name */
     .member-name{
@@ -308,8 +309,8 @@
         <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
           <defs>
             <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#63c5ed"/>
-              <stop offset="1" stop-color="#9ed4ef"/>
+              <stop offset="0" stop-color="#74add6"/>
+              <stop offset="1" stop-color="#74add6"/>
             </linearGradient>
           </defs>
           <path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"/>
@@ -437,7 +438,7 @@
 
     function makeMemberCard(m,i,type){
       return `<div class="member-card" tabindex="0" data-index="${i}" data-type="${type}">
-        <img class="avatar-img" src="${m.img}" alt="${m.name}"/>
+        <img class="avatar-img" src="${m.img}" alt="${m.name}" width="190" height="190" decoding="async"/>
         <div class="member-name">${m.name}</div>
         <div class="member-title">${sanitizeTitle(m.title)}</div>
       </div>`;
