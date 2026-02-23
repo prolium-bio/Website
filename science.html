@@ -204,18 +204,27 @@
     img{max-width:100%;height:auto}
   
 
-/* ===== Disease Info Cards (modular) ===== */
-.disease-cards{max-width:min(1200px,90vw);margin:18px auto 0}
-.disease-card{background:rgba(255,255,255,.85);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);overflow:hidden}
-.dcard-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(90deg,#f5fbff,#eaf6ff);color:#0e2f36;border:none;padding:14px 16px;cursor:pointer;font-weight:900;font-size:clamp(1.05rem,0.9rem + 0.6vw,1.35rem);text-align:left}
-.dcard-toggle:hover{filter:brightness(1.02)}
-.dcard-toggle:focus-visible{outline:3px solid rgba(99,197,237,.65);outline-offset:2px}
-.dcard-title{display:inline-block}
-.chev{transition:transform .2s ease}
-.dcard-toggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
-.dcard-panel{padding:10px 16px 18px}
-/* Optional spacing inside panel reusing .section-desc */
-.dcard-panel .section-desc{text-align:left}
+/* ===== Disease Info Cards (popup modal version) ===== */
+.disease-cards{max-width:min(1200px,90vw);margin:18px auto 0;display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:760px){.disease-cards{grid-template-columns:1fr 1fr}}
+.disease-card{background:rgba(255,255,255,.9);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);overflow:hidden;border-left:6px solid var(--prolium-blue)}
+.dcard-open{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(90deg,#f5fbff,#e6f2ff);color:#0e2f36;border:none;padding:16px;cursor:pointer;font-weight:900;font-size:clamp(1.05rem,0.9rem + 0.6vw,1.35rem);text-align:left}
+.dcard-open:hover{filter:brightness(1.02)}
+.dcard-open:focus-visible{outline:3px solid rgba(116,173,214,.65);outline-offset:2px}
+.dcard-title{display:inline-block;color:#0e2f36}
+.chev{transition:transform .2s ease;color:var(--prolium-blue)}
+.dcard-content{display:none}
+/* ===== Modal overlay ===== */
+.dexpander{position:fixed;inset:0;z-index:30000;display:grid;place-items:center;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .24s ease}
+.dexpander.active{opacity:1;pointer-events:auto}
+.dexpander-card{position:relative;width:min(980px,92vw);max-height:88vh;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);border-top:6px solid var(--prolium-blue)}
+.dexpander-head{background:linear-gradient(180deg, #eaf4fb, #ffffff);padding:18px 20px 12px;text-align:center}
+.dexpander-title{font-weight:900;color:#0b2f39;font-size:clamp(1.2rem,.8rem + 1.2vw,1.6rem)}
+.dexpander-body{padding:18px 22px 28px;overflow:auto;max-height:calc(88vh - 76px)}
+.dexpander-body .section-desc{text-align:left}
+.d-close-btn{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:999px;border:none;background:#0b2f39;color:#fff;font-size:24px;font-weight:900;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,.18)}
+.d-close-btn:hover{filter:brightness(1.05)}
+.d-close-btn:focus-visible{outline:3px solid rgba(116,173,214,.65)}
 
 </style>
 </head>
@@ -292,10 +301,11 @@
         administered subcutaneously, for systemic sclerosis (SSc), systemic lupus erythematosus (SLE), and other severe autoimmune diseases that are driven
         predominantly by aberrant B-cells.<br/><br/>
         Prolium is actively evaluating additional therapies that have the potential to treat severe
-        autoimmune disease.<br/><br/></p><section aria-label="Disease overviews" class="disease-cards"><article class="disease-card"><button aria-expanded="false" class="dcard-toggle"><span class="dcard-title">About Systemic Sclerosis</span><svg aria-hidden="true" class="chev" height="20" viewbox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button><div class="dcard-panel" hidden="True"><p class="section-desc">Systemic sclerosis (SSc), or scleroderma, is a rare, chronic autoimmune disease characterized by vascular injury, immune system dysregulation, and progressive fibrosis affecting both the skin and vital internal organs, including the lungs, heart, and gastrointestinal tract. Global prevalence is estimated at 17.6 cases per 100,000 people, with highest rates in North America. <br/><br/>
+        autoimmune disease.<br/><br/>
+        About Systemic Sclerosis: Systemic sclerosis (SSc), or scleroderma, is a rare, chronic autoimmune disease characterized by vascular injury, immune system dysregulation, and progressive fibrosis affecting both the skin and vital internal organs, including the lungs, heart, and gastrointestinal tract. Global prevalence is estimated at 17.6 cases per 100,000 people, with highest rates in North America. <br/><br/>
         Patients with SSc face a substantial disease burden due to skin thickening, dyspnea from pulmonary or cardiac involvement, gastrointestinal dysfunction, kidney disease, limited mobility, chronic pain, and fatigue. The disease also carries one of the highest mortality rates among autoimmune conditions, largely driven by interstitial lung disease (ILD), pulmonary hypertension and cardiac disease. Although some treatments are available to slow the progression of SSc‑associated ILD, current approved therapies address only specific complications rather than addressing and modifying the underlying disease mechanism and fibrotic process.  <br/><br/>
         Substantial clinical evidence implicates the role of aberrant B-cells in SSc.  Although rituximab, an antibody which targets CD20 on B-cells, is often used off-label for SSc, its efficacy is believed to be limited due to its insufficient depletion of B-cells in the tissues.  CAR-T therapies and T-cell engagers can induce profound B-cell depletion within tissues and may offer meaningful clinical benefit even in highly refractory populations, including patients who are unresponsive to rituximab. Notably, PRO-203 has demonstrated deeper tissue B-cell depletion than rituximab, a finding that may translate into improved disease control and the potential for durable remission. <br/><br/>
-</p></div></article></section>
+</p><section aria-label="Disease overviews" class="disease-cards"><article class="disease-card"><button class="dcard-open"><span class="dcard-title">About Systemic Lupus</span><svg aria-hidden="true" class="chev" height="20" viewbox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button><div class="dcard-content" hidden="True"><p class="section-desc">Systemic lupus erythematosus (SLE) is a chronic autoimmune disease that causes widespread inflammation across multiple organ systems, including the skin, joints, kidneys, central nervous system, and cardiovascular system. It affects approximately 200,000 people in the United States and an estimated 3.4 million individuals worldwide, with women making up most cases.</p><p class="section-desc">SLE is a lifelong condition characterized by alternating periods of flares and remission. Symptoms vary widely and may include fatigue, joint pain, skin rashes and involvement of major organs such as the kidneys, heart, brain and blood cells. Lupus nephritis, a serious kidney complication, is a key cause of long-term organ damage and mortality. Aberrant B-cells play an important role in the pathogenesis of SLE.  Although rituximab, a CD-20 targeting therapy, is frequently used off-label for the treatment of SLE, and although another CD-20 targeting therapy, obinutuzumab (Gazyva), has recently been approved for SLE in the United States.</p><p class="section-desc">Emerging clinical evidence suggests that CAR-T cell therapies and T-cell engagers can achieve deeper and more sustained B-cell depletion. These approaches have shown the potential to deliver meaningful clinical benefit even in highly refractory patients, including those who have failed rituximab, and may signal the beginning of a new therapeutic era for autoimmune diseases.</p></div></article></section>
 <section class="spacer" id="phase12"></section>
 <div aria-label="Phase I/II (China) snapshot" class="evidence" style="margin-top:10%">
 <h3 class="section-title" style="margin-top:24px">Phase I/II snapshot (ICP-B02, China)</h3>
@@ -356,7 +366,7 @@
 <a class="cta-link" href="contact.html">Contact Prolium</a>
 </div>
 </main>
-<script>
+<div aria-label="Disease details" aria-modal="true" class="dexpander" id="diseaseExpander" role="dialog"></div><script>
     // Mobile drawer (same behavior as index)
     const toggle=document.querySelector('.nav-toggle');
     const drawer=document.getElementById('drawer');
@@ -376,24 +386,45 @@
     window.addEventListener('scroll', setShadow, { passive: true });
   
 
-// Disease card toggles (modular)
-function setupDiseaseCards(root=document){
-  root.querySelectorAll('.dcard-toggle').forEach(btn=>{
-    if (btn.dataset.bound) return; // idempotent
-    btn.dataset.bound = '1';
-    const panel = btn.parentElement.querySelector('.dcard-panel');
+// Disease cards -> popup modal
+function initDiseaseCards(root=document){
+  root.querySelectorAll('.dcard-open').forEach(btn=>{
+    if (btn.dataset.bound) return; btn.dataset.bound='1';
     btn.addEventListener('click', ()=>{
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      if (expanded){ panel.setAttribute('hidden',''); }
-      else { panel.removeAttribute('hidden'); }
+      const card = btn.closest('.disease-card');
+      const content = card.querySelector('.dcard-content');
+      const titleEl = btn.querySelector('.dcard-title');
+      openDiseaseModal(titleEl ? titleEl.textContent.trim() : 'Details', content ? content.innerHTML : '');
     });
-    btn.addEventListener('keydown', (e)=>{
-      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); }
-    });
+    btn.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); } });
   });
 }
-setupDiseaseCards();
+
+function openDiseaseModal(title, html){
+  const ex = document.getElementById('diseaseExpander');
+  ex.innerHTML = `
+    <div class="dexpander-card" role="document" aria-label="${title}">
+      <button class="d-close-btn" id="dCloseBtn" aria-label="Close">×</button>
+      <div class="dexpander-head"><div class="dexpander-title">${title}</div></div>
+      <div class="dexpander-body">${html}</div>
+    </div>`;
+  ex.classList.add('active');
+  document.body.style.overflow='hidden';
+  const closeBtn = document.getElementById('dCloseBtn');
+  const close = ()=> closeDiseaseModal();
+  closeBtn.addEventListener('click', close);
+  ex.addEventListener('click', (e)=>{ if(e.target === ex) close(); });
+  document.addEventListener('keydown', escCloseDiseaseOnce);
+}
+function escCloseDiseaseOnce(e){ if(e.key==='Escape'){ closeDiseaseModal(); } }
+function closeDiseaseModal(){
+  document.removeEventListener('keydown', escCloseDiseaseOnce);
+  const ex = document.getElementById('diseaseExpander');
+  ex.classList.remove('active');
+  setTimeout(()=>{ ex.innerHTML=''; document.body.style.overflow=''; }, 160);
+}
+
+initDiseaseCards();
 
 </script>
 </body>
