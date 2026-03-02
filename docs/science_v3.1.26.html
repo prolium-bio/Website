@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-F9RB88G6G8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-F9RB88G6G8');
+</script>
+<link href="TabLogo.png" rel="icon" type="image/png"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Science &amp; Pipeline — Prolium Bio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root{
+  --body-step-0: clamp(0.96rem, 0.86rem + 0.30vw, 1.10rem);
+  --body-step-1: clamp(1.05rem, 0.92rem + 0.60vw, 1.28rem);
+  --wave-green:#21c036;
+      --prolium-blue:#74ADD6;
+      --prolium-green:#21c036;
+      --text-main:#123e47;
+      --prolium-orange:#FF991C;
+      --prolium-dark:#0e2f36;
+      --bg-green-0:#e9f8f0; --bg-green-1:#dbf6e6; --bg-green-2:#b6efce; --bg-green-3:#6ce49a; --bg-green-4:#21c036;
+      --hero-nudge:-15svh; --wave-h:clamp(260px,22vw,820px);
+      --step--1:clamp(0.85rem,0.72rem + 0.20vw,1.00rem);
+      --step-0:clamp(0.95rem,0.80rem + 0.35vw,1.15rem);
+      --step-1:clamp(1.10rem,0.90rem + 0.60vw,1.35rem);
+      --step-2:clamp(1.35rem,1.00rem + 1.00vw,1.85rem);
+      --step-3:clamp(1.80rem,1.10rem + 1.60vw,2.60rem);
+    }
+    html{font-size:clamp(12px,1.1vw + 0.2vh,22px);overflow-x:hidden;scroll-padding-top:80px}
+    body{margin:0;min-height:100%;color:var(--text-main);font-family:'Inter',Arial,sans-serif;font-size:var(--body-step-0);line-height:1.6;
+         background:#ffffff;
+         background-attachment:local;overflow-x:hidden;padding-top:80px;scroll-behavior:smooth}
+    /* NAV */
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:10px clamp(16px,3vw,28px);background:rgba(255,255,255,0.47);
+         backdrop-filter:blur(6px);position:fixed;top:0;left:0;right:0;z-index:10000;gap:14px;transition:box-shadow .2s ease,background-color .2s ease}
+    .nav.scrolled{box-shadow:0 6px 18px rgba(0,0,0,.12);background:rgba(255,255,255,0.86)}
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px,34px + 2.5vw,72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem,0.3rem + 1vw,1.1rem);position:relative}
+    .nav-links a{font-size:calc(var(--step--1) * 1.15);font-weight:800;letter-spacing:.005em;line-height:1;color:#0b2f39;text-decoration:none;padding:clamp(6px,4px + .6vw,10px) clamp(8px,6px + .7vw,12px);background:none;border:none;cursor:pointer;border-radius:9999px;transition:background .16s,color .16s}
+    .nav-links a:hover,.nav-links a.active{background:var(--prolium-green);color:#fff}
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem,1.2rem + 2.2vw,2rem);cursor:pointer;border-radius:9999px;padding:2px 8px}
+    .drawer{position:fixed;top:0;right:-100%;height:100%;width:min(55vw,260px);background:rgba(255,255,255,0.47);backdrop-filter:blur(6px);transition:right .28s ease;z-index:20000;padding:20px;display:flex;flex-direction:column;gap:.5rem;box-shadow:-4px 0 10px rgba(0,0,0,0.08)}
+    .drawer.open{right:0}
+    .drawer a{color:#0b2f39;text-decoration:none;font-weight:800;text-align:left;font-size:calc(var(--step--1) * 0.92);padding:10px 8px;border-radius:12px}
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    /* HERO */
+    .hero{position:relative;background:#ffffff;isolation:isolate;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;background:#ffffff;margin:0;overflow:hidden;margin-top:var(--hero-nudge)}
+    .hero-content{position:relative;z-index:4;max-width:min(1400px,92vw);padding:0 clamp(12px,3vw,24px)}
+    .hero-title{font-size:clamp(2.8rem,1.6rem + 3.5vw,4.6rem);line-height:1.12;font-weight:900;letter-spacing:-0.02em;margin:0 0 14px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+    .page-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-10px auto 10px;position:relative;z-index:3}
+    .page-chip{font-weight:800;color:#0a3f14;background:rgba(255,255,255,.7);padding:8px 14px;font-size:calc(var(--step--1)*0.95);text-transform:uppercase;letter-spacing:.06em;text-decoration:none;border-radius:9999px}
+    .page-chip:hover{filter:brightness(1.03);color:var(--prolium-green)}
+
+    .wave-wrap{position:absolute;left:0;bottom:0;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0)}
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;margin-bottom:-1svh}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0)}
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite;transform-origin:50% 100%}
+
+    .wrap{max-width:1420px;margin:0 auto;padding:0 5vw}
+    .section-title{font-size:clamp(1.6rem,1.1rem + 1.2vw,2.2rem);margin:0 auto clamp(8px,1vh,18px);color:var(--prolium-dark);font-weight:900;letter-spacing:-0.01em;text-align:center;width:fit-content}
+    .section-desc,.lead-blurb{font-size:var(--body-step-1);color:var(--prolium-dark);font-weight:700;max-width:min(1200px,90vw);margin:0 auto;line-height:1.6;text-align:left}
+    .spacer{height:1svh}
+
+    /* PIPELINE checks (from baseline) */
+    .pipeline{margin:clamp(80px,9vh,110px) auto 0;text-align:center}
+    .pipeline .checks{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+    .pipeline .check{display:flex;gap:10px;align-items:flex-start}
+    .pipeline .tick{flex:0 0 28px;height:28px;display:grid;place-items:center;background:rgba(255,255,255,.75);box-shadow:0 4px 16px rgba(0,0,0,.12);border-radius:9999px}
+    .pipeline .tick svg{width:16px;height:16px}
+    .pipeline .check p{margin:0;font-weight:700;color:#0e3a27;line-height:1.6}
+    @media (max-width:800px){.pipeline .checks{grid-template-columns:1fr}}
+
+    .cta{text-align:center;margin:72px 0 36px}
+    .cta-link{color:#fff;background:linear-gradient(90deg,#1aa62f,#128d27);font-weight:800;padding:14px 30px;font-size:var(--step--1);text-decoration:none;display:inline-block;border-radius:9999px}
+
+    .nav-links a:focus-visible, .drawer a:focus-visible, .cta-link:focus-visible, .nav-toggle:focus-visible, .page-chip:focus-visible, .dcard-open:focus-visible, .close-btn:focus-visible{outline:3px solid rgba(99,197,237,.65);outline-offset:2px}
+
+    img{max-width:100%;height:auto}
+
+    /* ===== Disease cards (row) ===== */
+    .disease-cards{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch;justify-content:flex-start;max-width:min(1200px,90vw);margin:18px auto 0}
+    .disease-card{flex:0 1 420px;background:rgba(255,255,255,.9);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);overflow:hidden;border-left:6px solid var(--prolium-blue)}
+    @media (min-width:1000px){.disease-card{flex:0 0 48%}}
+    .dcard-open{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(90deg,#f5fbff,#e6f2ff);color:#0e2f36;border:none;padding:16px;cursor:pointer;font-weight:900;font-size:clamp(1.05rem,0.9rem + 0.6vw,1.35rem);text-align:left}
+    .dcard-title{display:inline-block;color:#0e2f36}
+    .chev{transition:transform .2s ease;color:var(--prolium-blue)}
+
+    /* ===== Modal overlay ===== */
+    .dexpander{position:fixed;inset:0;z-index:30000;display:grid;place-items:center;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .24s ease}
+    .dexpander.active{opacity:1;pointer-events:auto}
+    .dexpander-card{position:relative;width:min(980px,92vw);max-height:92vh;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);border-top:6px solid var(--prolium-blue)}
+    .dexpander-head{background:linear-gradient(180deg,#eaf4fb,#ffffff);padding:24px 26px 16px;text-align:center}
+    .dexpander-title{font-weight:900;color:#0b2f39;font-size:clamp(1.2rem,.8rem + 1.2vw,1.6rem)}
+    .dexpander-body{padding:30px 34px 48px;overflow:auto;max-height:calc(92vh - 110px);box-sizing:border-box}
+    .dexpander-body .section-desc{margin:0 0 1.15rem;font-weight:400}
+    .dexpander-body .section-desc + .section-desc{margin-top:0.35rem}
+
+    /* Close button (match About page) */
+    .close-btn{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:999px;border:none;background:#0b2f39;color:#fff;font-size:24px;font-weight:900;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,.18)}
+    .close-btn:hover{filter:brightness(1.05)}
+    .close-btn:focus-visible{outline:3px solid rgba(116,173,214,.65)}
+
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  
+/* Under-hero starts right after hero; gradient relative to content area */
+.under-hero{
+  background: linear-gradient(180deg, var(--wave-green) 0%, #ffffff 100%);
+}
+/* Tiny overlap to hide any 1px antialias line */
+.wave{ margin-bottom: -1px; }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav aria-label="Primary" class="nav" role="navigation">
+<div class="nav-brand">
+<a href="index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+<img alt="Prolium Logo" class="nav-logo" src="Logo.png"/>
+</a>
+</div>
+<div aria-label="Primary links" class="nav-links">
+<a href="index.html">Home</a>
+<a class="active" href="science.html">Science &amp; Pipeline</a>
+<!-- <a href="trials.html">Clinical Trials</a> -->
+<a href="about.html#about">About</a>
+<a href="contact.html">Contact</a>
+</div>
+<button aria-expanded="false" aria-label="Menu" class="nav-toggle">☰</button>
+</nav>
+<!-- Drawer -->
+<div aria-label="Mobile menu" aria-modal="true" class="drawer" id="drawer" role="dialog">
+<a href="index.html">Home</a>
+<a class="active" href="science.html">Science &amp; Pipeline</a>
+<!-- <a href="trials.html">Clinical Trials</a> -->
+<a href="about.html#about">About</a>
+<a href="contact.html">Contact</a>
+</div>
+<!-- HERO -->
+<header aria-label="Science overview" class="hero">
+<div class="hero-content">
+<h1 class="hero-title">Science and Pipeline</h1>
+<nav aria-label="On this page" class="page-nav">
+<a class="page-chip" href="#pipeline">Pipeline</a>
+<a class="page-chip" href="#phase12">Phase I/II Results</a>
+<a class="page-chip" href="#TCE">TCE Overview</a>
+</nav>
+</div>
+<!-- Waves -->
+<div aria-hidden="true" class="wave-wrap">
+<div class="wave wave--back">
+<svg preserveaspectratio="none" viewbox="0 0 1440 540">
+<defs>
+<lineargradient id="bgBlue" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0" stop-color="#74add6"></stop>
+<stop offset="1" stop-color="#74add6"></stop>
+</lineargradient>
+</defs>
+<path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"></path>
+</svg>
+</div>
+<div class="wave wave--front">
+<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 1440 540">
+<path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"></path>
+</svg>
+</div>
+</div>
+</header><div class="under-hero">
+<!-- CONTENT -->
+<main class="wrap">
+<!-- PIPELINE -->
+<section class="spacer" id="pipeline"></section>
+<section aria-label="Pipeline" class="pipeline">
+<h2 class="section-title">Pipeline</h2>
+<p class="lead-blurb">
+        Prolium’s first asset is PRO-203, a CD20xCD3 bispecific antibody, also known as a T-cell engager. It works by binding
+        both CD20, a protein that is broadly expressed on the surface of B-cells, and CD3,
+        which is part of the T-cell receptor complex on T cells and is crucial for T-cell activation.
+        Physically linking T-cells to B-cells causes T-cells to release cytotoxic molecules to kill
+        the B-cell. <br/><br/>
+        Originally developed by InnoCare and Keymed, PRO-203 was first studied in relapsed /
+        refractory Non-Hodgkin’s lymphoma (NHL). Prolium plans to develop PRO-203,
+        administered subcutaneously, for systemic sclerosis (SSc), systemic lupus erythematosus (SLE), and other severe autoimmune diseases that are driven
+        predominantly by aberrant B-cells.<br/><br/>
+        Prolium is actively evaluating additional therapies that have the potential to treat severe
+        autoimmune disease.<br/><br/>
+</p>
+<!-- Disease Cards: SSc then SLE -->
+<section aria-label="Disease overviews" class="disease-cards">
+<article class="disease-card">
+<button class="dcard-open">
+<span class="dcard-title">About Systemic Sclerosis</span>
+<svg aria-hidden="true" class="chev" height="20" viewbox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="dcard-content" hidden="">
+<p class="section-desc">Systemic sclerosis (SSc), or scleroderma, is a rare, chronic autoimmune disease characterized by vascular injury, immune system dysregulation, and progressive fibrosis affecting both the skin and vital internal organs, including the lungs, heart, and gastrointestinal tract. Global prevalence is estimated at 17.6 cases per 100,000 people, with highest rates in North America.</p>
+<p class="section-desc">Patients with SSc face a substantial disease burden due to skin thickening, dyspnea from pulmonary or cardiac involvement, gastrointestinal dysfunction, kidney disease, limited mobility, chronic pain, and fatigue. The disease also carries one of the highest mortality rates among autoimmune conditions, largely driven by interstitial lung disease (ILD), pulmonary hypertension and cardiac disease. Although some treatments are available to slow the progression of SSc‑associated ILD, current approved therapies address only specific complications rather than addressing and modifying the underlying disease mechanism and fibrotic process.</p>
+<p class="section-desc">Substantial clinical evidence implicates the role of aberrant B‑cells in SSc. Although rituximab, a CD20‑targeting antibody, is often used off‑label for SSc, its efficacy is believed to be limited due to insufficient depletion of B‑cells in tissues. CAR‑T therapies and T‑cell engagers can induce profound B‑cell depletion within tissues and may offer meaningful clinical benefit even in highly refractory populations, including patients unresponsive to rituximab. Notably, PRO‑203 has demonstrated deeper tissue B‑cell depletion than rituximab, a finding that may translate into improved disease control and the potential for durable remission.</p>
+</div>
+</article>
+<article class="disease-card">
+<button class="dcard-open">
+<span class="dcard-title">About Lupus</span>
+<svg aria-hidden="true" class="chev" height="20" viewbox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="dcard-content" hidden="">
+<p class="section-desc">Systemic lupus erythematosus (SLE) is a chronic autoimmune disease that causes widespread inflammation across multiple organ systems, including the skin, joints, kidneys, central nervous system, and cardiovascular system. It affects approximately 200,000 people in the United States and an estimated 3.4 million individuals worldwide, with women making up most cases.</p>
+<p class="section-desc">SLE is a lifelong condition characterized by alternating periods of flares and remission. Symptoms vary widely and may include fatigue, joint pain, skin rashes and involvement of major organs such as the kidneys, heart, brain and blood cells. Lupus nephritis, a serious kidney complication, is a key cause of long‑term organ damage and mortality. Aberrant B‑cells play an important role in the pathogenesis of SLE.  Although rituximab, a CD‑20 targeting therapy, is frequently used off‑label for the treatment of SLE, and although another CD‑20 targeting therapy, obinutuzumab (Gazyva), has recently been approved for SLE in the United States.</p>
+<p class="section-desc">Emerging clinical evidence suggests that CAR‑T cell therapies and T‑cell engagers can achieve deeper and more sustained B‑cell depletion. These approaches have shown the potential to deliver meaningful clinical benefit even in highly refractory patients, including those who have failed rituximab, and may signal the beginning of a new therapeutic era for autoimmune diseases.</p>
+</div>
+</article>
+<article class="disease-card" id="card-phase12"><button aria-label="Phase I/II Results" class="dcard-open">
+<span class="dcard-title">Phase I/II Results</span>
+<svg aria-hidden="true" class="chev" height="20" viewbox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="dcard-content" hidden="">
+<h3 class="section-title" style="margin-top:0">Phase I/II snapshot (ICP-B02, China)</h3>
+<ul class="tce-list" style="margin:0; padding-left:1rem; list-style:disc; list-style-position:outside;"><li>Phase I/II clinical trial in Relapsed and Refractory Non-Hodgkin’s lymphoma(NHL); conducted by InnoCare and Keymed (ICP-B02/CM355)</li><li>Promising early results, particularly in follicular lymphoma (FL) and diffuse large B-cell lymphoma (DLBCL)</li><li>Assessed safety, tolerability, PK, and preliminary anti-tumor activity</li><li>Evaluated both IV and SC formulations</li></ul>
+</div></article><article class="disease-card" id="card-tce"><button aria-label="About T-Cell Engagers" class="dcard-open">
+<span class="dcard-title">About T-Cell Engagers</span>
+<svg aria-hidden="true" class="chev" height="20" viewbox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="dcard-content" hidden="">
+<p class="section-desc">T-cell engagers (TCEs) are engineered, bispecific antibodies that redirect T-cells to eliminate cells expressing a specific antigen. While initially pioneered in oncology to destroy tumor cells, TCEs are now being explored for autoimmune diseases, where the goal is to selectively deplete pathogenic immune cells.</p><p class="section-desc">TCEs are typically designed with two arms (e.g., CD20 and CD3) that engage their targets simultaneously, forming an immune synapse between the T-cell and the target cell, triggering T-cell activation, release of cytotoxic granules, and targeted killing of the bound cell.</p><p class="section-desc">Clinical experience with B cell–directed CAR T therapies has demonstrated that deep and durable B cell depletion can translate into profound and sustained disease control in autoimmune disorders, underscoring the pathogenic role of residual B cell populations. While approved agents such as Rituximab (anti-CD20 antibody) have been effective in a broad range of diseases, clinical efficacy is thought to be limited by its ability to achieve deep B-cell depletion.</p><p class="section-desc">T cell engagers offer a differentiated immunotherapy approach in autoimmune disease by enabling potent, targeted depletion of pathogenic B cells while avoiding the complexity of autologous cell therapy. By redirecting endogenous T cells to eliminate B cells, these agents have the potential to achieve deeper and more complete B cell depletion compared to current approved agents. At the same time, unlike CAR T therapies, T cell engagers are off the shelf biologics, allowing for standardized manufacturing, rapid treatment initiation, and broader scalability.</p>
+</div></article></section>
+
+
+</section>
+<!-- T-Cell Engagers -->
+
+
+<div aria-label="Contact Prolium" class="cta" style="text-align:center;margin:72px 0 36px">
+<a class="cta-link" href="contact.html">Contact Prolium</a>
+</div>
+</main>
+<!-- Modal container -->
+<div aria-label="Disease details" aria-modal="true" class="dexpander" id="diseaseExpander" role="dialog"></div>
+</div><script>
+    // Mobile drawer
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    // Fixed nav shadow
+    const nav = document.querySelector('.nav');
+    const setShadow = () => { if (window.scrollY > 4) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+
+    // Disease cards -> modal
+    function initDiseaseCards(root=document){
+      root.querySelectorAll('.dcard-open').forEach(btn=>{
+        if (btn.dataset.bound) return; btn.dataset.bound='1';
+        btn.addEventListener('click', ()=>{
+          const card = btn.closest('.disease-card');
+          const content = card.querySelector('.dcard-content');
+          const titleEl = btn.querySelector('.dcard-title');
+          let html = content ? content.innerHTML : '';
+          html = html.replace(/<\/p>\s*<p/gi, '</p><br><p');
+          openDiseaseModal(titleEl ? titleEl.textContent.trim() : 'Details', html);
+        });
+        btn.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); } });
+      });
+    }
+
+    function openDiseaseModal(title, html){
+      const ex = document.getElementById('diseaseExpander');
+      ex.innerHTML = `
+        <div class="dexpander-card" role="document" aria-label="${title}">
+          <button class="close-btn" id="dCloseBtn" aria-label="Close">×</button>
+          <div class="dexpander-head"><div class="dexpander-title">${title}</div></div>
+          <div class="dexpander-body">${html}</div>
+        </div>`;
+      ex.classList.add('active');
+      document.body.style.overflow='hidden';
+      const closeBtn = document.getElementById('dCloseBtn');
+      const close = ()=> closeDiseaseModal();
+      closeBtn.addEventListener('click', close);
+      ex.addEventListener('click', (e)=>{ if(e.target === ex) close(); });
+      document.addEventListener('keydown', escCloseDiseaseOnce);
+    }
+    function escCloseDiseaseOnce(e){ if(e.key==='Escape'){ closeDiseaseModal(); } }
+    function closeDiseaseModal(){
+      document.removeEventListener('keydown', escCloseDiseaseOnce);
+      const ex = document.getElementById('diseaseExpander');
+      ex.classList.remove('active');
+      setTimeout(()=>{ ex.innerHTML=''; document.body.style.overflow=''; }, 160);
+    }
+
+    initDiseaseCards();
+  
+// Chips -> open specific cards
+function openCardById(id){
+  const btn = document.querySelector(`#${id} .dcard-open`);
+  if(!btn) return;
+  document.querySelector('.disease-cards')?.scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(()=>btn.click(), 120);
+}
+const chipPhase = document.querySelector('a.page-chip[href="#phase12"]');
+chipPhase?.addEventListener('click', (e)=>{ e.preventDefault(); openCardById('card-phase12'); history.replaceState(null,'','#phase12'); });
+const chipTCE = document.querySelector('a.page-chip[href="#TCE"]');
+chipTCE?.addEventListener('click', (e)=>{ e.preventDefault(); openCardById('card-tce'); history.replaceState(null,'','#TCE'); });
+window.addEventListener('load', ()=>{
+  if(location.hash==="#phase12") openCardById('card-phase12');
+  if(location.hash==="#TCE") openCardById('card-tce');
+});
+</script>
+</body>
+</html>
