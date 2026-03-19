@@ -2,13 +2,6 @@
 <html lang="en">
 <head>
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1e34ca60-e412-4701-accc-3759d06e3156" data-blockingmode="auto" type="text/javascript"></script>
-div#CybotCookiebotDialog {scale: 25%;}
-  @media screen and (max-width: 767px) {#CybotCookiebotDialog {
-        font-size: 14px !important;
-        padding: 10px !important;
-        max-height: 20vh; /* Limits height to 20% of screen */
-        overflow-y: auto; /* Adds scrollbar if content is too long */}}
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9RB88G6G8"></script>
 <script>
@@ -49,7 +42,14 @@ div#CybotCookiebotDialog {scale: 25%;}
       --step-3:  clamp(1.80rem, 1.10rem + 1.60vw, 2.60rem);
     }
 
+    div#CybotCookiebotDialog {scale: 45%;}
+  @media screen and (max-width: 767px) {#CybotCookiebotDialog {
+        font-size: 14px !important;
+        padding: 10px !important;
+        max-height: 20vh; /* Limits height to 20% of screen */
+        overflow-y: auto; /* Adds scrollbar if content is too long */}}
     html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+   
     body{
       margin:0;
       min-height:100%;
