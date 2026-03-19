@@ -43,7 +43,9 @@
     }
 
     div#CybotCookiebotDialog {    scale: 65%; /* Adjust percentage as needed */
-    transform-origin: bottom; /* Keeps it anchored to the bottom */}
+    transform-origin: bottom; /* Keeps it anchored to the bottom */
+    left: 50%; /* Moves the left edge to the horizontal center */
+    transform: translate(-50%, -50%); /* Shifts the banner back by half its own width and height, thus perfectly centering it */}
   @media screen and (max-width: 767px) {#CybotCookiebotDialog {
         font-size: 14px !important;
         padding: 10px !important;
