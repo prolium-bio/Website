@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9RB88G6G8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-F9RB88G6G8');
+  </script>
+
+  <link rel="icon" type="image/png" href="TabLogo.png">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex"/>
+  <title>Page Not Found — Prolium Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --prolium-blue:#74add6;
+      --prolium-green:#21c036;
+      --prolium-dark:#0e2f36;
+      --text-main:#123e47;
+
+      --wave-h: clamp(260px, 22vw, 820px);
+
+      --step--1: clamp(0.85rem, 0.72rem + 0.20vw, 1.00rem);
+      --step-0: clamp(0.95rem, 0.80rem + 0.35vw, 1.15rem);
+      --step-1: clamp(1.10rem, 0.90rem + 0.60vw, 1.35rem);
+      --step-2: clamp(1.35rem, 1.00rem + 1.00vw, 1.85rem);
+      --step-3: clamp(1.80rem, 1.10rem + 1.60vw, 2.60rem);
+    }
+
+    *{ box-sizing:border-box; }
+
+    html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+
+    /* IMPORTANT: make the page background green so it always extends to the bottom */
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text-main);
+      font-family:'Inter',Arial,sans-serif;
+      font-size: var(--step-0);
+      line-height:1.6;
+      background: var(--prolium-green);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      padding-top:80px;
+    }
+
+    /* NAV */
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px clamp(16px, 3vw, 28px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      position:fixed;top:0;left:0;right:0;z-index:10000;gap:14px;
+      transition: box-shadow .2s ease, background-color .2s ease;
+    }
+    .nav.scrolled{ box-shadow:0 6px 18px rgba(0,0,0,.12); background:rgba(255,255,255,0.86); }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px, 34px + 2.5vw, 72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem, 0.3rem + 1vw, 1.1rem)}
+    .nav-links a{
+      font-size: calc(var(--step--1) * 1.15);
+      font-weight:800;letter-spacing:.005em;line-height:1;
+      color:#0b2f39;text-decoration:none;
+      padding:clamp(6px, 4px + .6vw, 10px) clamp(8px, 6px + .7vw, 12px);
+      border-radius:9999px;
+      transition:background .16s,color .16s;
+    }
+    .nav-links a:hover{background:var(--prolium-green);color:#fff}
+
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem, 1.2rem + 2.2vw, 2rem);cursor:pointer;border-radius:9999px;}
+    .drawer{
+      position:fixed;top:0;right:-100%;height:100%;
+      width:min(55vw,260px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      transition:right .28s ease;
+      z-index:20000;padding:20px;
+      display:flex;flex-direction:column;gap:.5rem;
+      box-shadow:-4px 0 10px rgba(0,0,0,0.08);
+    }
+    .drawer.open{right:0}
+    .drawer a{
+      color:#0b2f39;text-decoration:none;font-weight:800;
+      text-align:left;font-size:calc(var(--step--1) * 0.92);
+      padding:10px 8px;border-radius:12px
+    }
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    /* HERO */
+    .hero{
+      position:relative;
+      isolation:isolate;
+      min-height: calc(100vh - 80px); /* fill remaining viewport below fixed nav */
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:#fff;
+      margin:0;
+      overflow:hidden;
+      margin-top:-15svh;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:4;
+      max-width:min(980px,92vw);
+      padding:0 clamp(12px,3vw,24px);
+    }
+
+    .hero-title{
+      font-size: clamp(2.2rem, 1.4rem + 2.8vw, 3.8rem);
+      line-height:1.12;
+      font-weight:900;
+      letter-spacing:-0.02em;
+      margin:0 0 12px;
+      color:#0e2f36;
+    }
+
+    .hero-desc{
+      font-size: calc(var(--step-1));
+      color:var(--prolium-dark);
+      font-weight:700;
+      max-width:min(900px, 90vw);
+      margin:0 auto;
+      line-height:1.55;
+    }
+
+    /* WAVES */
+    .wave-wrap{position:absolute;left:0;bottom:-1px;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0);} 
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0);} 
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%;}
+
+    /* Focus ring */
+    .nav-links a:focus-visible,
+    .drawer a:focus-visible,
+    .nav-toggle:focus-visible{
+      outline:3px solid rgba(99,197,237,.65);
+      outline-offset:2px;
+    }
+
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-brand">
+      <a href="/" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+        <img class="nav-logo" src="Logo.png" alt="Prolium Logo">
+      </a>
+    </div>
+
+    <div class="nav-links" aria-label="Primary links">
+      <a href="/">Home</a>
+      <a href="/science">Science &amp; Pipeline</a>
+      <a href="/about">About</a>
+      <a href="/news">News</a>
+      <a href="/contact">Contact</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  </nav>
+
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobile menu">
+    <a href="/">Home</a>
+    <a href="/science">Science &amp; Pipeline</a>
+    <a href="/about">About</a>
+    <a href="/news">News</a>
+    <a href="/contact">Contact</a>
+  </div>
+
+  <header class="hero" aria-label="404 page">
+    <div class="hero-content">
+      <h1 class="hero-title">Page not found</h1>
+      <p class="hero-desc">The page you’re looking for doesn’t exist or may have moved. Use the links above to get back on track.</p>
+    </div>
+
+    <div class="wave-wrap" aria-hidden="true">
+      <div class="wave wave--back">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540">
+          <defs>
+            <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#74add6"/>
+              <stop offset="1" stop-color="#74add6"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"/>
+        </svg>
+      </div>
+      <div class="wave wave--front">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 540" aria-hidden="true">
+          <path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    // Mobile drawer
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // Fixed-nav shadow
+    const nav = document.querySelector('.nav');
+    const setShadow = () => {
+      if (window.scrollY > 4) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+  </script>
+</body>
+</html>
