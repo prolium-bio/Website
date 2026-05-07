@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pipeline — Prolium Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --prolium-blue:#63c5ed;
+      --prolium-green:#21c036;
+      --text-main:#123e47;
+
+      /* Match site-wide background stops */
+      --bg-green-0:#d8efe3;
+      --bg-green-1:#c4e9d4;
+      --bg-green-2:#9fe0bb;
+      --bg-green-3:#63d48e;
+      --bg-green-4:#21c036;
+    }
+
+    /* PAGE BACKGROUND */
+    html,body{
+      margin:0;padding:0;min-height:100%;
+      color:var(--text-main);
+      font-family:'Inter',Arial,sans-serif;
+      scroll-behavior:smooth;
+      background:linear-gradient(180deg,
+        var(--bg-green-0) 0%,
+        var(--bg-green-1) 28%,
+        var(--bg-green-2) 55%,
+        var(--bg-green-3) 78%,
+        var(--bg-green-4) 100%);
+      background-attachment:fixed;
+    }
+
+    /* NAV — identical to index/about/science */
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px 20px;background:#ffffffb3;backdrop-filter:blur(6px);
+      position:sticky;top:0;z-index:10000;box-shadow:0 4px 16px #00000010
+    }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:72px;width:auto}
+
+    .nav-links{display:flex;align-items:center;gap:1.1rem;position:relative}
+    .nav-links a,
+    .nav-links button{
+      font-size:1.02rem;font-weight:800;letter-spacing:.005em;line-height:1;
+      color:#0b2f39;text-decoration:none;padding:10px 12px;border-radius:10px;
+      background:none;border:none;cursor:pointer;transition:background .16s,color .16s;
+    }
+    .nav-links a:hover,
+    .nav-links button:hover,
+    .nav-links a.active{background:rgba(0,0,0,.05)}
+
+    /* Desktop dropdowns (hover, focus-within, and click-open) */
+    .submenu{position:relative}
+    .submenu > button[aria-expanded]{user-select:none}
+    .sublist{
+      position:absolute;top:calc(100% + 6px);left:0;
+      background:#fff;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.18);
+      padding:6px;min-width:220px;z-index:10001;display:none;
+    }
+    .submenu:hover .sublist,
+    .submenu:focus-within .sublist,
+    .submenu.open .sublist{display:block}
+    .sublist a{display:block;padding:12px 14px;border-radius:10px;font-weight:800;color:#0b2f39;font-size:1.02rem}
+    .sublist a:hover{background:#f3f7fb}
+
+    /* Mobile drawer (same as the rest of the site) */
+    .nav-toggle{display:none;background:none;border:none;font-size:2rem;cursor:pointer}
+    .drawer{
+      position:fixed;top:0;right:-100%;height:100%;width:min(86vw,340px);
+      background:white;box-shadow:-2px 0 24px rgba(0,0,0,.18);transition:right .28s ease;
+      z-index:20000;padding:20px;display:flex;flex-direction:column;gap:.5rem
+    }
+    .drawer.open{right:0}
+    .drawer a,.drawer button{
+      color:#0b2f39;text-decoration:none;font-weight:800;background:none;border:none;
+      text-align:left;font-size:1.05rem;padding:10px 8px;border-radius:10px
+    }
+    .drawer a:hover,.drawer button:hover{background:#eef6ff}
+    .drawer .submenu{display:flex;flex-direction:column}
+    .drawer .sublist{display:none;flex-direction:column;padding-left:10px}
+    .drawer .sublist.open{display:flex}
+
+    @media(max-width:900px){
+      .nav-links{display:none}
+      .nav-toggle{display:block}
+    }
+
+    /* HERO — solid background behind text; waves below */
+    .hero{
+      position:relative;isolation:isolate;
+      min-height:92svh;
+      display:flex;align-items:center;justify-content:center;
+      padding:12svh 6vw 10svh;
+      overflow:hidden;border-radius:0 0 36px 36px;text-align:center;
+      background:#f6fbf8;
+      box-shadow:0 16px 60px rgba(0,0,0,.08)
+    }
+    .hero-content{position:relative;z-index:4;max-width:1100px}
+    .hero-title{
+      font-size:clamp(2.2rem,6.2vw,5rem);
+      line-height:1.22;font-weight:900;letter-spacing:-0.02em;
+      margin:0 0 12px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25)
+    }
+    .hero-desc{
+      font-size:clamp(1.04rem,2.1vw,1.35rem);
+      font-weight:700;color:#154e59;margin:0 auto;max-width:900px;line-height:1.6;
+      text-shadow:0 1px 0 rgba(255,255,255,.2)
+    }
+
+    /* WAVES — same shapes/palette as index/about/science */
+    .wave-wrap{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+    .wave{position:absolute;inset:auto 0 0 0;height:68svh;min-height:420px}
+    .wave svg{width:100%;height:100%;transform-origin:50% 100%}
+    @keyframes pulseA{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes pulseB{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:pulseA 12s ease-in-out infinite}
+
+    /* Green clipped wave uses the fixed page gradient for a perfect blend */
+    .wave-clip{
+      position:absolute;left:0;right:0;bottom:0;
+      height:720px;min-height:720px;z-index:2;
+      background:linear-gradient(180deg,
+        var(--bg-green-4) 75%,
+        var(--bg-green-3) 85%,
+        var(--bg-green-2) 95%,
+        var(--bg-green-1) 98%,
+        var(--bg-green-0) 100%);
+      background-attachment:fixed;background-repeat:no-repeat;
+      clip-path: path("M0,460 C260,520 420,520 680,470 C940,420 1110,460 1300,560 C1370,600 1410,640 1440,680 L1440,720 L0,720 Z");
+      animation:pulseB 16s ease-in-out infinite;
+      transform-origin:50% 100%;
+    }
+
+    /* CONTENT WRAPPER */
+    .wrap{max-width:1120px;margin:0 auto;padding:0 5vw}
+
+    /* On-page quick nav (kept) */
+    .page-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-24px auto 10px;position:relative;z-index:3}
+    .page-chip{font-weight:700;color:#0a3f14;background:rgba(255,255,255,.7);border-radius:999px;padding:8px 14px;font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;text-decoration:none}
+    .page-chip:hover,.page-chip:focus{outline:none;filter:brightness(1.05)}
+
+    /* Sections (content preserved; light polish for consistency) */
+    .lead-section{margin:54px auto 0}
+    .lead-title{font-size:clamp(1.5rem,4.6vw,2.4rem);color:#0b2f39;font-weight:800;margin:0 0 12px;letter-spacing:-0.01em;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.28)}
+    .lead-blurb{
+      font-size:clamp(1.02rem,2.1vw,1.2rem);line-height:1.7;font-weight:600;color:#0e3a27;
+      margin:0 auto 16px;max-width:980px;text-shadow:0 1px 0 rgba(255,255,255,.22);
+    }
+    .lead-blurb strong{font-weight:800;color:#0a3f14}
+
+    .evidence{margin:64px auto 0}
+    .section-title{font-size:clamp(1.4rem,4.4vw,2.1rem);color:#0b2f39;font-weight:800;margin:0 0 14px;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+    .checks{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .check{display:flex;gap:10px;align-items:flex-start}
+    .tick{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.75);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+    .tick svg{width:16px;height:16px}
+    .check p{margin:0;font-weight:600;color:#0e3a27;line-height:1.6}
+    @media (max-width:800px){ .checks{grid-template-columns:1fr} }
+
+    .cta{text-align:center;margin:72px 0 36px}
+    .cta-link{color:#fff;background:linear-gradient(90deg,#1aa62f,#128d27);border:none;border-radius:14px;font-weight:800;padding:14px 30px;font-size:1.06rem;cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.14);text-decoration:none;display:inline-block}
+    .cta-link:hover,.cta-link:focus{filter:brightness(1.06)}
+
+    /* Responsive */
+    @media (max-width:560px){.hero{min-height:78svh;padding:14svh 5vw 10svh}.nav-logo{height:60px}}
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+    img{max-width:100%;height:auto}
+  </style>
+</head>
+<body>
+  <!-- NAV (same structure as index/about/science) -->
+  <nav class="nav" role="navigation" aria-label="Primary">
+    <div class="nav-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+        <img class="nav-logo" src="Prolium_color_transparent (1) (1).png" alt="Prolium Logo">
+      </a>
+    </div>
+
+    <div class="nav-links" aria-label="Primary links">
+      <a href="index.html">Home</a>
+
+      <div class="submenu">
+        <button type="button" aria-haspopup="true" aria-expanded="false">Science ▾</button>
+        <div class="sublist" role="menu" aria-label="Science submenu">
+          <a href="science.html" role="menuitem">Science Overview</a>
+          <a href="pipeline.html" role="menuitem" class="active" aria-current="page">Pipeline</a>
+        </div>
+      </div>
+
+      <a href="trials.html">Clinical Trials</a>
+
+      <div class="submenu">
+        <button type="button" aria-haspopup="true" aria-expanded="false">About ▾</button>
+        <div class="sublist" role="menu" aria-label="About submenu">
+          <a href="about.html#about" role="menuitem">About</a>
+          <a href="about.html#team" role="menuitem">Meet the Team</a>
+        </div>
+      </div>
+
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobile menu">
+    <a href="index.html">Home</a>
+
+    <div class="submenu">
+      <button id="scienceToggle" type="button" aria-expanded="false">Science ▸</button>
+      <div class="sublist" id="scienceMenu">
+        <a href="science.html">Science Overview</a>
+        <a href="pipeline.html" aria-current="page">Pipeline</a>
+      </div>
+    </div>
+
+    <a href="trials.html">Clinical Trials</a>
+
+    <div class="submenu">
+      <button id="aboutToggle" type="button" aria-expanded="false">About ▸</button>
+      <div class="sublist" id="aboutMenu">
+        <a href="about.html#about">About</a>
+        <a href="about.html#team">Meet the Team</a>
+      </div>
+    </div>
+
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" aria-label="Pipeline overview">
+    <div class="hero-content">
+      <h1 class="hero-title">PRO-203 — CD20×CD3 Bispecific</h1>
+      <p class="hero-desc">A confident, focused program built on early clinical experience—now advancing for autoimmune disease.</p>
+    </div>
+
+    <!-- Waves -->
+    <div class="wave-wrap" aria-hidden="true">
+      <!-- Blue back SVG -->
+      <div class="wave wave--back">
+        <svg preserveAspectRatio="none" viewBox="0 0 1440 720">
+          <defs>
+            <linearGradient id="bgBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#9ed4ef"/>
+              <stop offset="1" stop-color="#e3f2fb"/>
+            </linearGradient>
+          </defs>
+        <path fill="url(#bgBlue)" d="M0,260 C180,210 320,150 540,240 C760,330 870,320 1040,210 C1210,100 1350,80 1440,130 L1440,720 L0,720 Z"/>
+        </svg>
+      </div>
+      <!-- Green front: clipped body gradient (shared across the site) -->
+      <div class="wave-clip"></div>
+    </div>
+  </header>
+
+  <!-- On-page quick nav -->
+  <nav class="page-nav" aria-label="On this page">
+    <a class="page-chip" href="#overview">Overview</a>
+    <a class="page-chip" href="#evidence">Phase I/II snapshot</a>
+    <a class="page-chip" href="#plan">Development plan</a>
+  </nav>
+
+  <!-- CONTENT -->
+  <main class="wrap">
+    <!-- OVERVIEW (content preserved) -->
+    <section class="lead-section" id="overview">
+      <h2 class="lead-title">PRO-203 at a glance</h2>
+      <p class="lead-blurb">
+        <strong>Prolium’s first asset is PRO-203, a CD20×CD3 bispecific antibody.</strong> Originally developed by InnoCare and Keymed, PRO-203 was first studied in relapsed / refractory Non-Hodgkin’s lymphoma (NHL). The Phase I/II clinical trial in China to assess the safety, tolerability, PK and the preliminary anti-tumor activity of ICP-B02 has shown promising early results in both intravenous (IV) and subcutaneous (SC) formulations, particularly in patients with follicular lymphoma (FL) and diffuse large B-cell lymphoma (DLBCL). Prolium will initiate development of PRO-203 in autoimmune indications.
+      </p>
+    </section>
+
+    <!-- EVIDENCE (content preserved) -->
+    <section class="evidence" id="evidence" aria-label="Phase I/II (China) snapshot">
+      <h2 class="section-title">Phase I/II snapshot (ICP-B02, China)</h2>
+      <div class="checks">
+        <div class="check">
+          <div class="tick" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p>Assessed <strong>safety</strong>, <strong>tolerability</strong>, and <strong>PK</strong> with preliminary anti-tumor activity readouts.</p>
+        </div>
+        <div class="check">
+          <div class="tick" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p>Both <strong>IV</strong> and <strong>SC</strong> formulations evaluated.</p>
+        </div>
+        <div class="check">
+          <div class="tick" aria-hidden="true">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="#168a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p><strong>Promising early results</strong> reported, particularly in <strong>FL</strong> and <strong>DLBCL</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- (Optional) PLAN section anchor retained for future content -->
+    <section id="plan" aria-label="Development plan"></section>
+
+    <!-- CTA -->
+    <section class="cta" aria-label="Contact Prolium">
+      <a class="cta-link" href="contact.html">Contact Prolium</a>
+    </section>
+  </main>
+
+  <script>
+    // ===== Desktop dropdowns: click-to-toggle + outside-click/Escape close =====
+    const desktopSubmenus = document.querySelectorAll('.nav .submenu > button');
+    desktopSubmenus.forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const parent = btn.parentElement;
+        const isOpen = parent.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+        // close other open submenus
+        document.querySelectorAll('.nav .submenu.open').forEach(s=>{
+          if(s!==parent){ s.classList.remove('open'); s.querySelector('button').setAttribute('aria-expanded','false'); }
+        });
+        e.stopPropagation();
+      });
+    });
+    document.addEventListener('click', ()=>{
+      document.querySelectorAll('.nav .submenu.open').forEach(s=>{
+        s.classList.remove('open');
+        s.querySelector('button').setAttribute('aria-expanded','false');
+      });
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape'){
+        document.querySelectorAll('.nav .submenu.open').forEach(s=>{
+          s.classList.remove('open');
+          s.querySelector('button').setAttribute('aria-expanded','false');
+          s.querySelector('button').focus();
+        });
+      }
+    });
+
+    // ===== Mobile drawer =====
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    const sciToggle=document.getElementById('scienceToggle');
+    const sciMenu=document.getElementById('scienceMenu');
+    sciToggle?.addEventListener('click',()=>{
+      const open = sciMenu.classList.toggle('open');
+      sciToggle.textContent = open ? "Science ▾" : "Science ▸";
+      sciToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    const aboutToggle=document.getElementById('aboutToggle');
+    const aboutMenu=document.getElementById('aboutMenu');
+    aboutToggle?.addEventListener('click',()=>{
+      const open = aboutMenu.classList.toggle('open');
+      aboutToggle.textContent = open ? "About ▾" : "About ▸";
+      aboutToggle.setAttribute('aria-expanded', String(open));
+    });
+  </script>
+</body>
+</html>
