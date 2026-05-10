@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-F9RB88G6G8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-F9RB88G6G8');
+</script>
+<link href="TabLogo.png" rel="icon" type="image/png"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Prolium is a small but dedicated team leveraging big science to better the lives of people with severe autoimmune disorders." name="description"/>
+<title>About &amp; Meet the Team — Prolium Bio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root{
+      --prolium-blue:#74add6;
+      --prolium-green:#21c036;
+      --prolium-dark:#0e2f36;
+      --text-main:#123e47;
+      --prolium-orange:#FF991C;
+      --bg-green-0:#e9f8f0;
+      --bg-green-1:#dbf6e6;
+      --bg-green-2:#b6efce;
+      --bg-green-3:#6ce49a;
+      --bg-green-4:#21c036;
+
+      --wave-h: clamp(260px, 22vw, 820px);
+
+      /* Fluid type scale */
+        --step--1: clamp(0.85rem, 0.72rem + 0.20vw, 1.00rem);
+        --step-0:  clamp(0.95rem, 0.80rem + 0.35vw, 1.15rem);
+        --step-1:  clamp(1.10rem, 0.90rem + 0.60vw, 1.35rem);
+        --step-2:  clamp(1.35rem, 1.00rem + 1.00vw, 1.85rem);
+        --step-3:  clamp(1.80rem, 1.10rem + 1.60vw, 2.60rem);
+        
+
+      /* Name fitting */
+      --name-max-lines: 2;
+    }
+
+    html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+
+    body{
+      margin:0;min-height:100%;
+      color:var(--text-main);
+      font-family:'Inter',Arial,sans-serif;
+      font-size: var(--step-0);
+      line-height:1.6;
+      background:linear-gradient(180deg, #ffffff 0 120px, var(--bg-green-4) 120px 55%, var(--bg-green-3) 70%, var(--bg-green-2) 100%);
+      background-attachment:local;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      padding-top:80px; /* fixed nav offset */
+    }
+
+    /* NAV */
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px clamp(16px, 3vw, 28px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      position:fixed;top:0;left:0;right:0;z-index:10000;gap:14px;
+      transition: box-shadow .2s ease, background-color .2s ease;
+    }
+    .nav.scrolled{ box-shadow:0 6px 18px rgba(0,0,0,.12); background:rgba(255,255,255,0.86); }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px, 34px + 2.5vw, 72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem, 0.3rem + 1vw, 1.1rem)}
+    .nav-links a{
+      font-size: calc(var(--step--1) * 1.15);
+      font-weight:800;letter-spacing:.005em;line-height:1;
+      color:#0b2f39;text-decoration:none;
+      padding:clamp(6px, 4px + .6vw, 10px) clamp(8px, 6px + .7vw, 12px);
+      background:none;border:none;cursor:pointer;border-radius:9999px;
+      transition:background .16s,color .16s;
+    }
+    .nav-links a:hover, .nav-links a.active{background:var(--prolium-green);color:#fff}
+
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem, 1.2rem + 2.2vw, 2rem);cursor:pointer;border-radius:9999px;}
+    .drawer{
+      position:fixed;top:0;right:-100%;height:100%;
+      width:min(55vw,260px);
+      background:rgba(255,255,255,0.47);
+      backdrop-filter:blur(6px);
+      transition:right .28s ease;
+      z-index:20000;padding:20px;
+      display:flex;flex-direction:column;gap:.5rem;
+      box-shadow:-4px 0 10px rgba(0,0,0,0.08);
+    }
+    .drawer.open{right:0}
+    .drawer a{
+      color:#0b2f39;text-decoration:none;font-weight:800;
+      text-align:left;font-size:calc(var(--step--1) * 0.92);
+      padding:10px 8px;border-radius:12px
+    }
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    /* HERO */
+    .hero{
+      position:relative;isolation:isolate;
+      min-height:100svh;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;background:white;
+      margin:0;overflow:hidden;
+      margin-top:-15svh;
+    }
+    .hero-content{position:relative;z-index:4;max-width:min(1400px,92vw);padding:0 clamp(12px,3vw,24px)}
+    .hero-title{
+      font-size: clamp(2.8rem, 1.6rem + 3.5vw, 4.6rem);
+      line-height:1.12;font-weight:900;letter-spacing:-0.02em;
+      margin:0 0 14px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25);
+    }
+
+    .spacer{ height: 1svh; }
+
+    .page-nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-10px auto 10px;position:relative;z-index:3}
+    .page-chip{
+      font-weight:800;color:#0a3f14;background:rgba(255,255,255,.7);
+      padding:8px 14px;font-size:calc(var(--step--1)*0.95);
+      text-transform:uppercase;letter-spacing:.06em;text-decoration:none;border-radius:9999px;
+    }
+    .page-chip:hover{filter:brightness(1.03);color:var(--prolium-green)}
+
+    .wave-wrap{position:absolute;left:0;bottom:0;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0);} 
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;margin-bottom: -1svh;}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0);}    
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%;}
+
+    .wrap{max-width:1400px;margin:0 auto;padding:0 5vw}
+
+    .section-title{
+      font-size:var(--step-3);
+      margin:0 auto clamp(8px, 1vh, 18px);
+      color:var(--prolium-dark);font-weight:900;letter-spacing:-0.01em;
+      text-align:center;width:fit-content;
+    }
+    .lead,
+    .section-desc{
+      font-size:calc(var(--step-1));
+      color:var(--prolium-dark);font-weight:700;
+      max-width:min(1200px, 90vw);margin:0 auto;line-height:1.55;text-align:center;
+    }
+
+    .values-kicker{text-align:center;color:#0f3b3f;font-weight:700;margin:26px 0 14px}
+    .values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:25px;}
+    .value{background:rgba(255,255,255,.8);border-radius:16px;padding:16px 16px 14px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    .value h3{margin:0 0 6px;font-size:1.05rem;color:#0a3f14;font-weight:800;letter-spacing:.01em}
+    .value p{margin:0;font-size:1rem;color:#0f3b3f;font-weight:500}
+    .pill{display:inline-block;margin-bottom:8px;font-weight:800;color:#0a3f14;background:rgba(33,192,54,.16);border-radius:9999px;padding:6px 10px;font-size:.88rem}
+    @media (max-width:940px){.values-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:620px){.values-grid{grid-template-columns:1fr}}
+
+    /* Tabs + grids */
+    .tabs-bar{display:flex;justify-content:center;align-items:center;gap:10px;margin:8px auto 6px;position:relative;z-index:3}
+    .tab{cursor:pointer;background:rgba(119, 214, 246, 0.7);border: none;border-radius:9999px;padding:10px 16px;font-size:.98rem;font-weight:800;color:#0a3f14;text-transform:uppercase;letter-spacing:.06em}
+    .tab.active,.tab:focus{background:var(--prolium-blue);color:#fff;outline:none}
+
+    /* ====== TEAM/BOARD GRID (2-wide, independent cards, a bit more center gap) ====== */
+
+.team-grid, .board-grid, .sab-grid{
+  display:grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  justify-content:center;
+  align-items:start;
+  gap: clamp(16px, 2.2vw, 28px);
+  margin:16px auto 44px;
+  max-width: 1400px;
+  position:relative; z-index:1;
+}
+@media (min-width: 760px){
+  .team-grid, .board-grid, .sab-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1120px){
+  .team-grid, .board-grid, .sab-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+    /* Replace current .member-card with this */
+    .member-card{
+ position:relative;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 8px 24px rgba(0,0,0,.10);
+      width: 100%;
+  max-width: 420px;
+  min-width: 0;
+      height: auto;
+      transition:box-shadow .24s, transform .18s;
+      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+      cursor:pointer;
+      padding: clamp(10px, 1.2vw, 14px) clamp(10px, 1.2vw, 14px);
+  padding-left: calc(clamp(10px, 1.2vw, 14px) + 10px);
+overflow:hidden;
+    }
+    
+/* Accent stripe (match News page style) */
+.member-card::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:10px;
+  background: var(--prolium-blue);
+}
+.member-card:hover{box-shadow:0 14px 46px rgba(0,0,0,.18);transform:translateY(-4px)}
+
+    /* Avatar */
+/* Replace current .avatar-img with this */
+    .avatar-img{
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(0,0,0,.12);
+      margin-bottom: clamp(6px, 1vw, 10px);
+      border: 6px solid var(--prolium-blue);
+      background: #fff;
+    }
+
+
+    /* Name */
+    .member-name{
+    font-size: clamp(1.05rem, 0.9rem + 0.8vw, 1.55rem);
+    font-weight: 900;
+    line-height: 1.15;
+    }
+    .member-title{
+    font-size: clamp(0.98rem, 0.82rem + 0.55vw, 1.22rem);
+    font-weight: 800;
+    line-height: 1.2;
+    }
+    .member-name,
+    .member-title{
+      text-align: center;
+      width: 100%;
+    }
+
+
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+
+    /* Expander overlay */
+    .expander{position:fixed; inset:0; z-index:30000; display:grid; place-items:center; background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .28s ease;}
+    .expander.active{opacity:1; pointer-events:auto}
+    .expander-card{position:relative; width:min(980px,92vw); max-height:88vh; background:#fff; border-radius:24px; overflow:hidden; transform-origin: top left;}
+    .expander-inner{position:relative; transform-style:preserve-3d; transition:transform .6s ease; min-height:560px;}
+    .expander-inner.flipped{ transform:rotateY(180deg) }
+    .face{position:absolute; inset:0; backface-visibility:hidden; display:grid; place-items:center; padding:28px;}
+    .face.front{background:radial-gradient(circle at 30% 20%, #f7fbff, #eef7ff); gap:16px; text-align:center;}
+
+    .face.back{
+      transform:rotateY(180deg);
+      overflow:auto;
+      display:grid;
+      grid-template-rows:auto auto auto 1fr;
+      place-items:center;
+      text-align:center;
+      padding: clamp(20px, 2.5vw, 32px) clamp(16px, 2.2vw, 28px);
+    }
+    .expanded-avatar{
+      width: clamp(120px, 14vw, 200px);
+      aspect-ratio: 1/1; border-radius:50%; object-fit:cover;
+      border:6px solid #e8f6fd; background:#fff;
+    }
+    .expanded-name{font-size: clamp(1.2rem, .7rem + 1.4vw, 1.6rem); font-weight:900; color:#0b2f39; line-height:1.15; margin-top:16px}
+    .expanded-title{font-size: clamp(1rem, .6rem + 1vw, 1.15rem); font-weight:800; color:#0a3f14; margin-top:6px}
+    .expanded-body{
+      padding:18px 0 32px; line-height:1.75; color:#0f3b3f; font-weight:500;
+      max-width:1200px; width:min(100%, 80ch); margin:14px auto 0;
+    }
+
+    .expanded-head{display:flex; align-items:center; padding:22px 28px; position:sticky; top:0; background:none; z-index:2; position:relative;}
+    .close-btn{position:absolute; top:12px; right:12px; width:40px; height:40px; border-radius:999px; border:none; background:#0b2f39; color:#fff; font-size:24px; font-weight:900; cursor:pointer; box-shadow:0 10px 20px rgba(0,0,0,.18);}
+    .close-btn:hover{filter:brightness(1.05)}
+    .close-btn:focus{outline:3px solid #21c03644}
+
+    /* CTA */
+    .cta{text-align:center;margin:72px 0 36px}
+    .cta-link{color:#fff;background: var(--prolium-green);font-weight:800;padding:14px 30px;font-size:var(--step--1);text-decoration:none;display:inline-block;border-radius:9999px}
+
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+    img{max-width:100%;height:auto}
+  
+
+/* =============================
+   BIO CARD LAYOUT (v11) — proportional gutters + tighter card bottoms
+   - Keep column width from Option 2 (tighter cards)
+   - Reduce row-gap vs column-gap (row felt too big)
+   - Reduce bottom padding inside cards further
+   ============================= */
+
+:root{
+  --bio-card-max-2col: 332px;
+  --bio-card-max-3col: 386px;
+  --bio-col-gap: clamp(56px, 4.6vw, 110px);
+  --bio-row-gap: clamp(34px, 3.2vw, 72px);
+  --bio-pad-x: clamp(10px, 1.0vw, 12px);
+  --bio-pad-y: clamp(10px, 1.0vw, 12px);
+  --bio-pad-b: clamp(6px, 0.7vw, 9px);
+  --bio-stripe-w: 10px;
+}
+
+.team-grid, .board-grid, .sab-grid{
+  display:grid !important;
+  justify-content:center !important;
+  justify-items:center !important;
+  align-items:start !important;
+  column-gap: var(--bio-col-gap) !important;
+  row-gap: var(--bio-row-gap) !important;
+  padding-inline: clamp(16px, 2.4vw, 26px) !important;
+  margin: 22px auto 56px !important;
+  max-width: 1400px !important;
+}
+
+@media (max-width: 429px){
+  .team-grid, .board-grid, .sab-grid{ grid-template-columns: minmax(0, 1fr) !important; }
+}
+@media (min-width: 430px) and (max-width: 1119px){
+  .team-grid, .board-grid, .sab-grid{ grid-template-columns: repeat(2, minmax(0, var(--bio-card-max-2col))) !important; }
+}
+@media (min-width: 1120px){
+  .team-grid, .board-grid, .sab-grid{ grid-template-columns: repeat(3, minmax(0, var(--bio-card-max-3col))) !important; }
+}
+
+.member-card{
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: var(--bio-pad-y) var(--bio-pad-x) var(--bio-pad-b) var(--bio-pad-x) !important;
+  padding-left: calc(var(--bio-pad-x) + var(--bio-stripe-w)) !important;
+  border-radius: 18px !important;
+  overflow:hidden !important;
+  position:relative !important;
+  box-shadow: 0 7px 18px rgba(0,0,0,.10) !important;
+  transform:none !important;
+}
+.member-card:hover{ transform:none !important; box-shadow: 0 7px 18px rgba(0,0,0,.10) !important; }
+
+.member-card::before{
+  content:"" !important;
+  position:absolute !important;
+  left:0; top:0; bottom:0;
+  width: var(--bio-stripe-w) !important;
+  background: var(--prolium-blue) !important;
+}
+
+/* Internal spacing tweaks */
+.avatar-img{ margin-bottom: 4px !important; width: clamp(150px, 16.5vw, 182px) !important; height: clamp(150px, 16.5vw, 182px) !important; }
+.member-name{ margin-top: 2px !important; margin-bottom: 0 !important; line-height: 1.12 !important; }
+.member-title{ margin-top: 0 !important; margin-bottom: 0 !important; line-height: 1.14 !important; }
+
+
+
+/* LinkedIn icon in header */
+.nav-links a.nav-social.linkedin{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  padding:0;
+  border-radius:4px;
+  background: var(--prolium-blue);
+  color:#fff;
+  line-height:1;
+}
+.nav-links a.nav-social.linkedin svg{
+  width:19px;
+  height:19px;
+  display:block;
+}
+.nav-links a.nav-social.linkedin:hover{ filter: brightness(0.96); }
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav aria-label="Primary" class="nav" role="navigation">
+<div class="nav-brand">
+<a href="/" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+<img alt="Prolium Logo" class="nav-logo" src="Logo.png"/>
+</a>
+</div>
+<div aria-label="Primary links" class="nav-links">
+<a href="/">Home</a>
+<a href="/science">Science &amp; Pipeline</a>
+<!--<a href="/trials">Clinical Trials</a>-->
+<a class="active" href="/about">About</a>
+<a href="/news">News</a><a href="/contact">Contact</a>
+<a aria-label="Prolium on LinkedIn" class="linkedin nav-social" href="https://www.linkedin.com/company/prolium-bio/" rel="noopener" target="_blank"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 23.5h4V7.98h-4V23.5ZM8.5 7.98h3.83v2.12h.05c.53-1 1.83-2.12 3.77-2.12 4.03 0 4.78 2.65 4.78 6.1v9.42h-4v-8.36c0-1.99-.04-4.56-2.78-4.56-2.78 0-3.2 2.17-3.2 4.42v8.5h-4V7.98Z" fill="currentColor"></path></svg></a></div>
+<button aria-expanded="false" aria-label="Menu" class="nav-toggle">☰</button>
+</nav>
+<!-- Mobile drawer -->
+<div aria-label="Mobile menu" aria-modal="true" class="drawer" id="mobile-drawer" role="dialog">
+<a href="/">Home</a>
+<a href="/science">Science &amp; Pipeline</a>
+<!--<a href="/trials">Clinical Trials</a>-->
+<a class="active" href="/about">About</a>
+<a href="/news">News</a><a href="/contact">Contact</a>
+<a href="https://www.linkedin.com/company/prolium-bio/" rel="noopener" target="_blank">LinkedIn</a></div>
+<!-- HERO -->
+<header aria-label="About Prolium" class="hero" id="about">
+<div class="hero-content">
+<h1 class="hero-title">About Prolium</h1>
+<nav aria-label="On this page" class="page-nav">
+<a class="page-chip" href="#team">Team</a>
+<a class="page-chip" href="#values">Values</a>
+</nav>
+</div>
+<!-- Waves -->
+<div aria-hidden="true" class="wave-wrap">
+<div class="wave wave--back">
+<svg preserveaspectratio="none" viewbox="0 0 1440 540">
+<defs>
+<lineargradient id="bgBlue" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0" stop-color="#74add6"></stop>
+<stop offset="1" stop-color="#74add6"></stop>
+</lineargradient>
+</defs>
+<path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"></path>
+</svg>
+</div>
+<div class="wave wave--front">
+<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 1440 540">
+<path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"></path>
+</svg>
+</div>
+</div>
+</header>
+<main class="wrap">
+<!-- ABOUT -->
+<section aria-labelledby="about-title" class="wrap">
+<h2 class="section-title" id="about-title">About us</h2>
+<p class="section-desc">
+        Prolium is a clinical-stage biotechnology company focused on bringing breakthrough therapy to patients with autoimmune diseases.
+        Established in 2025 and backed by RTW Investments in New York City, we are led by seasoned entrepreneurs and clinicians with
+        deep experience in drug development.
+      </p>
+</section>
+<!-- TEAM / BOARD -->
+<section class="spacer" id="team"></section>
+<section aria-labelledby="team-title" class="wrap">
+<h2 class="section-title" id="team-title">Meet the Team</h2>
+<div class="tabs-bar">
+<button aria-controls="teamContent" class="tab active" id="teamTab" tabindex="0">Team Members</button>
+<button aria-controls="boardContent" class="tab" id="boardTab" tabindex="0">Board Members</button>
+<button aria-controls="sabContent" class="tab" id="sabTab" tabindex="0">SAB Members</button></div>
+<div class="tab-content active" id="teamContent"><div class="team-grid" id="team-grid"></div></div>
+<div class="tab-content" id="boardContent"><div class="board-grid" id="board-grid"></div></div><div class="tab-content" id="sabContent"><div class="sab-grid" id="sab-grid"></div></div>
+</section>
+<!-- VALUES -->
+<section class="spacer" id="values"></section>
+<main class="wrap about-sections">
+<section aria-labelledby="values-title">
+<h2 class="section-title" id="values-title">Our Values (ARCH)</h2>
+<p class="lead">At Prolium, we embody our values in everything we do.</p>
+<div class="values-grid">
+<article class="value">
+<span class="pill">A — Accountability</span>
+<p>We take ownership of our actions, decisions and outcomes. We honor our commitments, hold ourselves and others to high standards, and continuously strive to earn trust through transparency, integrity, and follow-through.</p>
+</article>
+<article class="value">
+<span class="pill">R — Resourcefulness</span>
+<p>We approach challenges with creativity, agility, and determination. We find smart, effective solutions with the tools at hand, adapt quickly to change, and turn obstacles into opportunities through innovation and initiative.</p>
+</article>
+<article class="value">
+<span class="pill">C — Collaboration</span>
+<p>We believe that honest conversations, strong teamwork, and genuine connection fuel our success. We speak openly and respectfully, work together across boundaries, and foster a culture of camaraderie where every voice is heard, and every person feels valued.</p>
+</article>
+<article class="value">
+<span class="pill">H — Humility</span>
+<p>We value diverse perspectives, listen with curiosity, and treat every interaction as a chance to learn and grow. Respect and humility guide our actions, no matter our experience or title.</p>
+</article>
+</div>
+</section>
+</main>
+</main>
+<!-- CTA -->
+<div aria-label="Contact Prolium" class="cta">
+<a class="cta-link" href="/contact">Contact Prolium</a>
+</div>
+<!-- Card Expander -->
+<div aria-label="Team member details" aria-modal="true" class="expander" id="cardExpander" role="dialog"></div>
+<script>
+    /* Mobile drawer */
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('mobile-drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', (e)=>{
+      if(drawer.classList.contains('open') && !drawer.contains(e.target) && !toggle.contains(e.target)){
+        drawer.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    }, { passive:true });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') drawer.classList.remove('open'); });
+
+    /* Fixed-nav shadow */
+    const nav = document.querySelector('.nav');
+    const setShadow = () => {
+      if (window.scrollY > 4) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+
+    /* ===== Team/Board data ===== */
+    const team = [
+      { name:"Scott Requadt", title:"CEO & President", long_bio:`Scott has over 24 years of operating and investing experience in biotech and pharmaceuticals. Most recently, he was CEO of Talaris Therapeutics, which was developing a novel cell therapy to induce or restore immune tolerance in organ transplant and severe auto-immune disease settings. In support of Talaris' late-clinical stage pipeline, he grew Talaris from 10 to 135 FTEs and raised over $330M, including a successful IPO in 2021.<br><br>He previously spent 14 years at Clarus Ventures (acquired by Blackstone Life Sciences), where he led and managed numerous investments spanning therapeutics, medtech and diagnostics. His original training is in finance and law, and he holds an MBA from Harvard, a JD/LL.B from University of Toronto and a B.Com from McGill.`, img:"Scott_Requadt2.png" },
+      { name:"Salim Mujais, MD", title:"CMO", long_bio:`Dr. Salim Mujais is an experienced pharmaceutical physician executive with more than three decades of leadership in clinical development, medical affairs, and academic medicine. He has contributed to the registration of six new chemical entities and authored over 180 scientific publications advancing patient care and therapeutic innovation.<br><br> He has served as Senior Vice President of Clinical Development at Generate:Biomedicines, Sumitomo Pharma America, and Urovant. During his 14-year tenure at Astellas Pharma, Dr. Mujais held senior leadership roles, culminating as Senior Vice President and Global Therapeutic Area Head. Earlier, as Vice President of Medical Affairs at Baxter Healthcare, he shaped clinical strategies in renal care and established the first dedicated medical affairs organizations in the renal division. <br><br> Before entering industry, Dr. Mujais was Associate Professor of Medicine in Nephrology at Northwestern University and held academic appointments at the University of Illinois at Chicago. He trained in nephrology at the University of Chicago and completed a fellowship in cardiovascular research at the Cleveland Clinic Foundation.`, img:"Salim_Mujais.png" },
+      { name:"Niki Bili, MD, MPH", title:"Vice President<br> Clinical Development", long_bio:`Androniki “Niki” Bili is a board-certified rheumatologist with over 25 years of experience spanning clinical practice, academic medicine, and drug development. She earned her medical degree from the Aristotle University of Thessaloniki, Greece, and completed her residency in Internal Medicine and fellowship in Allergy/Clinical Immunology and Rheumatology, along with a Masters in Public Health at the University of Rochester. <br><br>She has held leadership roles at Janssen, Merck, Bristol Myers Squibb, and most recently, Celldex, with expertise in the development of monoclonal and bispecific antibodies and small molecules for immunological diseases. She continues to see patients as a volunteer, maintaining a connection to those living with autoimmune diseases who inspire the advancement of new therapies.`, img:"Niki_Bili.png" },
+      { name:"Bob Huang", title:"Vice President<br> CMC & Manufacturing", long_bio:`Bob brings 24 years of experience in process development, cGMP manufacturing, tech transfers, and supply chain across multiple modalities, including monoclonal and bispecific antibodies, enzyme, and cell and gene therapy. His expertise spans from early phase IND development to commercial launches. <br><br> Prior to joining Prolium, Bob was the Vice President of Technical Operations at CARsgen Therapeutics. Before that, Bob held various roles of increasing responsibilities at Amgen, Shire, Tesaro, Kiniksa and Frontera Therapeutics.`, img:"Bob_Huang.jpg" },
+     { name:"James Sims, PhD", title:"Senior Director<br>Corporate Development", long_bio:`James has over a decade of experience in the biotech industry, primarily in alliance management, supporting collaboration programs from preclinical development through commercialization. Most recently, James was with Voyager Therapeutics, managing a portfolio of gene therapy programs under the partnership with Neurocrine Biosciences.<br><br>Prior to Voyager, James spent five years with Akebia Therapeutics, overseeing several key global alliances, including Otsuka Pharmaceuticals, Mitsubishi Tanabe Pharma, and Vifor Pharma (now part of CSL), as well as supporting business development and strategic planning initiatives. Additionally, James has several years of strategic consulting experience and holds a PhD in Chemical Engineering.`, img:"James2.png" },
+      { name:"Carrie Bell", title:"Senior Director<br> Program Management", long_bio:`Carrie is passionate about turning scientific ideas into real treatments that improve lives. She spent 16 years in Process Development at Amgen, mastering the art and science of bringing complex therapies to life. <br><br> Since 2020, she’s applied that expertise in clinical program management at small, agile biotech companies – helping guide promising programs through the challenges of early clinical development. Carrie thrives at the intersection of science, strategy, and teamwork, and is driven by the belief that every step forward brings patients closer to new hope.`, img:"Carrie2.png" },
+      { name:"Sergio Rodriguez", title:"Senior Director<br> Clinical Operations", long_bio:`Sergio Rodriguez is a Director of Clinical Operations at Prolium Bioscence, where he oversees the planning and execution of the company’s global clinical trials. He brings over 20 years of experience in clinical research across biotech, pharmaceutical and CRO environments, with expertise spanning oncology, autoimmune, infectious disease, and cardiovascular indications. Before joining Prolium, Sergio served in Director roles at IGM Biosciences and Arch Oncology, where he managed clinical programs and supported study execution. Earlier in his career, he worked at Pfizer and Medivation (acquired by Pfizer), contributing to large global oncology trials and gaining valuable experience in complex, early and late-stage development.`, img:"Sergio2.png" },
+      { name:"Molly Schneider", title:"Associate Director <br> QA & Supply Chain", long_bio:'Molly is a dedicated GMP Quality expert with over 25 years of extensive experience spanning Quality Assurance, Supplier Quality Management, Quality Control, Quality Systems, and Supply Chain operations. Her primary objective is to leverage this expertise to enhance QA and Supply Chain functions, including managing crucial processes such as audits, quality events, complaints, batch release, and supplier management.<br><br>Prior to joining Prolium, Molly held multiple roles at Attralus, Inc. including Sr. Manager QA, CMC and Sr. Project Manager, CMC. Before that, Molly held various roles of increasing responsibilities at Cortexyme, AGC Biologics, Agilent (Nucleic Acid Solutions Division), Sandoz, and Amgen.', img:"Molly2.png"},   
+      { name:"Jennifer McCargar", title:"Executive Assistant &<br>Special Projects", long_bio:`Jennifer McCargar is a seasoned Executive Assistant and Special Projects Manager with a proven track record of supporting C-suite leadership across dynamic industries including biotech, healthcare, consumer goods, and corporate services. With deep expertise in executive support, project coordination, event planning, and stakeholder engagement. <br><br> Her career spans roles at Prolium Bioscience, Talaris Therapeutics, GE Appliances, and Thorntons Inc., where she has consistently demonstrated her ability to manage complex calendars, international travel logistics, board communications, and high-impact corporate events. Jennifer is known for her proactive problem-solving, cross-functional collaboration, and ability to anticipate needs before they arise—qualities that make her an invaluable partner to executive teams. Jennifer holds a B.B.A. in Marketing and Management from McKendree University.`, img:"Jenn2.png" }
+    ];
+
+    const board = [
+      { name:"Peter Fong, PhD", title:"Board Chairman <br><br> Partner, President (RTW)", long_bio:`Peter is a partner and the president of RTW. In addition to his broad oversight across the firm he also sits on the boards of RTW’s portfolio of newcos. Prior to joining RTW, Peter worked at Flagship Pioneering in Cambridge as a member of the innovation team, where he led the creation of 4 companies including Harbinger Health. Peter previously worked at Genentech in Business Development, where he helped build the company’s pipeline through partnering including the company’s collaboration with BioNTech to develop mRNA-based personalized cancer vaccines. He has also worked at Memorial Sloan-Kettering; Carigent Therapeutics, which he co-founded; and General Electric as a chemist.<br><br>Peter received a PhD in bioengineering from Yale University, where he subsequently was a Brown-Coxe Postdoctoral Fellow, and his BS in biochemistry from Indiana University.`, img:"Fong.jpg" },
+      { name:"Lauren Cujé", title:"Managing Director, New Ventures (RTW)", long_bio:`Lauren is a Managing Director at RTW and co-heads our New Ventures business focused on company creation. Lauren is responsible for the selection and diligence of assets around which RTW builds new companies.<br><br>Prior to joining RTW, Lauren worked as a consultant in the life sciences industry and within the asset management division of Goldman Sachs. Lauren received a MA in Biotechnology from Columbia University and a BA in Molecular, Cellular and Developmental Biology from the University of Colorado.`, img:"Cuje.jpg" },
+      { name:"Joshua Kennedy-Smith, PhD", title:"Partner, Research Analyst (RTW)", long_bio:`Josh is a partner and research analyst at RTW and leads the firms efforts in Immunology and Inflammation.<br><br>He has more than a decade of professional experience in the biopharmaceutical industry. Prior to joining RTW, he served as Principal Scientist and Head of Externalization at Schrondinger. He has served as a key contributor in the early development of fenebrutinib and zasocitinib. He began his career at Roche as a medicinal chemist working on the team that discovered the drug Elpida (elsulfavirine) for the treatment of HIV.<br><br>Josh received a PhD in Chemistry from University of California, Berkeley and a BS in Chemistry from University of California, Santa Cruz. He has worked globally at sites in the US, Switzerland, and India.`, img:"Kennedy.jpg" },
+      { name:"Scott Requadt", title:"CEO & President", long_bio:`Scott has over 24 years of operating and investing experience in biotech and pharmaceuticals. Most recently, he was CEO of Talaris Therapeutics, which was developing a novel cell therapy to induce or restore immune tolerance in organ transplant and severe auto-immune disease settings. In support of Talaris' late-clinical stage pipeline, he grew Talaris from 10 to 135 FTEs and raised over $330M, including a successful IPO in 2021.<br><br>He previously spent 14 years at Clarus Ventures (acquired by Blackstone Life Sciences), where he led and managed numerous investments spanning therapeutics, medtech and diagnostics. His original training is in finance and law, and he holds an MBA from Harvard, a JD/LL.B from University of Toronto and a B.Com from McGill.`, img:"Scott_Requadt2.png" },
+    ];
+
+const sab = [
+  {
+    name: "Jörg Distler, MD",
+    org: "University Hospital of Düsseldorf",
+    title: "Director, Department of Rheumatology",
+    long_bio: `W3 Professor of Internal Medicine (Rheumatology) at Heinrich Heine University Düsseldorf and Director of the Department of Rheumatology and the Hiller Research Center at University Hospital of Düsseldorf.<br><br>Clinical focus on connective tissue and fibrotic diseases, particularly systemic sclerosis (SSc). Research focuses on tissue remodeling in chronic inflammation and translational antifibrotic therapies that have supported clinical studies with novel therapeutic approaches.<br><br>Former head of the European Scleroderma Trials and Research group (EUSTAR) and involved in EULAR initiatives. Trained at the University of Erlangen–Nuremberg with research/clinical experience at University Hospital Zurich and Duke University.`,
+    img: "distler.jpg"
+  },
+  {
+    name: "Zsuzsanna H. McMahan, MD, MHS",
+    org: "UTHealth Houston",
+    title: "Co-Director, Scleroderma Program",
+    long_bio: `Associate Professor of Medicine (Rheumatology) at UTHealth Houston and Co-Director of the UTHealth Houston Scleroderma Program.<br><br>Internationally recognized expert in gastrointestinal (GI) complications of systemic sclerosis. Research spans GI dysmotility phenotyping, serological biomarkers, autoantigen identification, autonomic dysfunction, and microbiome-related disease insights.<br><br>NIH/NIAMS-funded investigator (including a K23 mentored award, 2018–2023, and a multi-year NIH award, 2023–2028). Co-leads GI committees for the World Scleroderma Foundation and the Scleroderma Clinical Trials Consortium; contributor to major ACR ILD guidelines in systemic autoimmune rheumatic diseases.`,
+    img: "mcmahan.jpg"
+  },
+  {
+    name: "Hendrik Schulze-Koops, MD, PhD",
+    org: "University of Munich",
+    title: "Chair, Rheumatology & Clinical Immunology",
+    long_bio: `Chair of the Division of Rheumatology and Clinical Immunology at LMU Klinikum, University of Munich, and Full Professor of Internal Medicine, Rheumatology and Clinical Immunology.<br><br>Research focuses on cellular and molecular mechanisms in autoimmune disease, with longstanding emphasis on T cells in autoimmune pathogenesis.<br><br>Former President of the German Society of Rheumatology (2019–2020) and senior scientific leadership roles within EULAR (including Scientific Chair). Trained at the University of Hamburg with research experience in Max Planck Society clinical research groups and at the University of Texas Southwestern Medical Center.`,
+    img: "schulze-koops.jpg"
+  }
+];
+
+
+    /* Sanitize titles for the compact card (collapse double breaks) */
+    const sanitizeTitle = (t) => String(t).replaceAll('<br><br>', '<br>');
+
+    function makeMemberCard(m,i,type){
+      return `<div class="member-card" tabindex="0" data-index="${i}" data-type="${type}">
+        <img class="avatar-img" src="${m.img}" alt="${m.name}" width="190" height="190" decoding="async"/>
+        <div class="member-name">${m.name}</div>
+        <div class=\"member-title\">${type==='sab' ? m.org : sanitizeTitle(m.title)}</div>
+      </div>`;
+    }
+    function renderTeamGrid(){ document.getElementById('team-grid').innerHTML = team.map((m,i)=>makeMemberCard(m,i,'team')).join(''); }
+    function renderBoardGrid(){ document.getElementById('board-grid').innerHTML = board.map((m,i)=>makeMemberCard(m,i,'board')).join(''); }
+function renderSabGrid(){ document.getElementById('sab-grid').innerHTML = sab.map((m,i)=>makeMemberCard(m,i,'sab')).join(''); }
+    renderTeamGrid(); renderBoardGrid(); renderSabGrid();
+
+    /* === NAME AUTO-FIT === */
+    function fitNames(root=document){
+      const names = root.querySelectorAll('.member-name');
+      names.forEach(el=>{
+        el.style.fontSize = '';
+        const styles = getComputedStyle(el);
+        const maxLines = parseInt(getComputedStyle(document.documentElement)
+                          .getPropertyValue('--name-max-lines')) || 2;
+        const lineHeight = parseFloat(styles.lineHeight) || (parseFloat(styles.fontSize)*1.2);
+        const maxHeight = lineHeight * maxLines;
+        el.style.height = maxHeight + 'px';
+
+        let size = parseFloat(styles.fontSize);
+        const nameLen = (el.textContent || '').trim().length;
+ const minSize = (nameLen > 24 ? 8 : (nameLen > 18 ? 9 : 10)); 
+        let guard = 60;
+        while (el.scrollHeight > el.clientHeight && size > minSize && guard--){
+          size -= 0.5;
+          el.style.fontSize = size + 'px';
+        }
+        if (el.scrollHeight > el.clientHeight){
+          el.style.height = (maxHeight + lineHeight) + 'px';
+        }
+      });
+    }
+
+    /* === TITLE AUTO-FIT (3 lines) === */
+    function fitTitles(root=document){
+      const titles = root.querySelectorAll('.member-title');
+      titles.forEach(el=>{
+        el.style.fontSize='';
+        const styles = getComputedStyle(el);
+        const lineHeight = parseFloat(styles.lineHeight) || (parseFloat(styles.fontSize)*1.2);
+        const maxLines = 3;
+        const maxHeight = lineHeight * maxLines;
+        el.style.height = maxHeight + 'px';  // fix height so we can measure overflow
+
+        let size = parseFloat(styles.fontSize);
+        const minSize = 11;
+        let guard = 80;
+        while (el.scrollHeight > el.clientHeight && size > minSize && guard--){
+          size -= 0.5;
+          el.style.fontSize = size + 'px';
+        }
+      });
+    }
+
+    fitNames(); fitTitles();
+
+    window.addEventListener('resize', (()=> {
+      let t; 
+      return ()=>{ clearTimeout(t); t=setTimeout(()=>{ fitNames(); fitTitles(); }, 120); };
+    })());
+
+    /* Flip + expand */
+    const expander = document.getElementById('cardExpander');
+    let lastCard = null;
+
+    function openCard(member, sourceEl){
+      lastCard = sourceEl;
+      expander.innerHTML = `
+        <div class="expander-card" id="expanderCard" role="document" aria-label="${member.name}">
+          <div class="expander-inner" id="expanderInner">
+            <div class="face front">
+              <div>
+                <img class="expanded-avatar" src="${member.img}" alt="${member.name}">
+                <div class="expanded-name" style="margin-top:14px">${member.name}</div>
+                <div class="expanded-title">${member.title}</div>
+              </div>
+            </div>
+            <div class="face back">
+              <button class="close-btn" id="closeBtn" aria-label="Close">×</button>
+              <img class="expanded-avatar" src="${member.img}" alt="${member.name}">
+              <div class="expanded-name">${member.name}</div>
+              <div class="expanded-title">${member.title}</div>
+              <div class="expanded-body">${member.long_bio}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      expander.classList.add('active');
+      document.body.style.overflow='hidden';
+
+      const innerEl = document.getElementById('expanderInner');
+      requestAnimationFrame(()=> innerEl.classList.add('flipped'));
+
+      const closeBtn = document.getElementById('closeBtn');
+      const close = () => closeCard();
+      closeBtn.addEventListener('click', close);
+      expander.addEventListener('click', (e)=>{ if(e.target === expander) close(); });
+      document.addEventListener('keydown', escCloseOnce);
+    }
+
+    function escCloseOnce(e){ if(e.key==='Escape'){ closeCard(); } }
+    function closeCard(){
+      document.removeEventListener('keydown', escCloseOnce);
+      const innerEl = document.getElementById('expanderInner');
+      if(innerEl) innerEl.classList.remove('flipped');
+      setTimeout(()=>{ expander.classList.remove('active'); expander.innerHTML=''; document.body.style.overflow=''; }, 180);
+    }
+
+    function setupCardEvents(){
+      document.querySelectorAll('.member-card').forEach(card=>{
+        card.onclick=()=>{
+          const idx=card.getAttribute('data-index');
+          const type=card.getAttribute('data-type');
+          const member=(type==='team'?team:(type==='board'?board:sab))[idx];
+          openCard(member, card);
+        };
+        card.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ card.click(); e.preventDefault(); } };
+      });
+    }
+    setupCardEvents();
+
+    /* Tabs */
+    function activateTab(tab,content){
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+      tab.classList.add('active'); content.classList.add('active');
+      setTimeout(()=>{ setupCardEvents(); fitNames(); fitTitles(); }, 50);
+    }
+    const teamTab=document.getElementById('teamTab');
+    const boardTab=document.getElementById('boardTab');
+    const teamContent=document.getElementById('teamContent');
+    const boardContent=document.getElementById('boardContent');
+const sabTab=document.getElementById('sabTab');
+const sabContent=document.getElementById('sabContent');
+    teamTab.addEventListener('click',()=>activateTab(teamTab,teamContent));
+    boardTab.addEventListener('click',()=>activateTab(boardTab,boardContent));
+sabTab.addEventListener('click',()=>activateTab(sabTab,sabContent));
+    teamTab.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ activateTab(teamTab,teamContent); }});
+    boardTab.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ activateTab(boardTab,boardContent); }});
+  </script>
+</body>
+</html>
