@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-F9RB88G6G8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-F9RB88G6G8');
+  </script>
+<link href="TabLogo.png" rel="icon" type="image/png"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>News — Prolium Bio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root{
+      --prolium-blue:#74add6;
+      --prolium-green:#21c036;
+      --prolium-dark:#0e2f36;
+      --text-main:#123e47;
+      --bg-green-0:#e9f8f0;
+      --bg-green-1:#dbf6e6;
+      --bg-green-2:#b6efce;
+      --bg-green-3:#6ce49a;
+      --bg-green-4:#21c036;
+      --wave-h: clamp(260px, 22vw, 820px);
+      --step--1: clamp(0.85rem, 0.72rem + 0.20vw, 1.00rem);
+      --step-0: clamp(0.95rem, 0.80rem + 0.35vw, 1.15rem);
+      --step-1: clamp(1.10rem, 0.90rem + 0.60vw, 1.35rem);
+      --step-2: clamp(1.35rem, 1.00rem + 1.00vw, 1.85rem);
+      --step-3: clamp(1.80rem, 1.10rem + 1.60vw, 2.60rem);
+      --accent-w: 10px; /* thicker accent stripe */
+      --card-r: 18px;
+    }
+    *{box-sizing:border-box}
+    html{ font-size: clamp(12px, 1.1vw + 0.2vh, 22px); overflow-x:hidden; scroll-padding-top:80px; }
+    body{margin:0;min-height:100%;color:var(--text-main);font-family:'Inter',Arial,sans-serif;font-size: var(--step-0);line-height:1.6;background:linear-gradient(180deg, #ffffff 0 120px, var(--bg-green-4) 120px 55%, var(--bg-green-3) 70%, var(--bg-green-2) 100%);background-attachment:local;overflow-x:hidden;scroll-behavior:smooth;padding-top:80px;}
+
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:10px clamp(16px, 3vw, 28px);background:rgba(255,255,255,0.47);backdrop-filter:blur(6px);position:fixed;top:0;left:0;right:0;z-index:10000;gap:14px;transition: box-shadow .2s ease, background-color .2s ease;}
+    .nav.scrolled{ box-shadow:0 6px 18px rgba(0,0,0,.12); background:rgba(255,255,255,0.86); }
+    .nav-brand{display:flex;align-items:center;gap:14px}
+    .nav-logo{height:clamp(44px, 34px + 2.5vw, 72px);width:auto}
+    .nav-links{display:flex;align-items:center;gap:clamp(0.5rem, 0.3rem + 1vw, 1.1rem)}
+    .nav-links a{font-size: calc(var(--step--1) * 1.15);font-weight:800;letter-spacing:.005em;line-height:1;color:#0b2f39;text-decoration:none;padding:clamp(6px, 4px + .6vw, 10px) clamp(8px, 6px + .7vw, 12px);border-radius:9999px;transition:background .16s,color .16s;}
+    .nav-links a:hover, .nav-links a.active{background:var(--prolium-green);color:#fff}
+    .nav-toggle{display:none;background:none;border:none;font-size:clamp(1.6rem, 1.2rem + 2.2vw, 2rem);cursor:pointer;border-radius:9999px;}
+    .drawer{position:fixed;top:0;right:-100%;height:100%;width:min(55vw,260px);background:rgba(255,255,255,0.47);backdrop-filter:blur(6px);transition:right .28s ease;z-index:20000;padding:20px;display:flex;flex-direction:column;gap:.5rem;box-shadow:-4px 0 10px rgba(0,0,0,0.08);}
+    .drawer.open{right:0}
+    .drawer a{color:#0b2f39;text-decoration:none;font-weight:800;text-align:left;font-size:calc(var(--step--1) * 0.92);padding:10px 8px;border-radius:12px}
+    .drawer a:hover{background:#f3f7fb}
+    @media(max-width:900px){.nav-links{display:none}.nav-toggle{display:block}}
+
+    .hero{position:relative;isolation:isolate;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;background:white;margin:0;overflow:hidden;margin-top:-15svh;}
+    .hero-content{position:relative;z-index:4;max-width:min(1400px,92vw);padding:0 clamp(12px,3vw,24px)}
+    .hero-title{font-size: clamp(2.8rem, 1.6rem + 3.5vw, 4.6rem);line-height:1.12;font-weight:900;letter-spacing:-0.02em;margin:0 0 14px;color:#0e2f36;text-shadow:0 1px 0 rgba(255,255,255,.25);}
+    .hero-desc{font-size: calc(var(--step-1));color:var(--prolium-dark);font-weight:700;max-width:min(1200px, 90vw);margin:0 auto;line-height:1.55}
+
+    .wave-wrap{position:absolute;left:0;bottom:0;width:100%;height:var(--wave-h);z-index:1;pointer-events:none;overflow:hidden;transform:translateZ(0);} 
+    .wave{position:absolute;left:0;bottom:0;width:100%;height:100%;margin-bottom:-1svh;}
+    .wave svg{display:block;width:100%;height:100%;transform:translateZ(0);} 
+    @keyframes waveBreathBack{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.03)}}
+    @keyframes waveBreathFront{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+    .wave--back svg{animation:waveBreathBack 12s ease-in-out infinite}
+    .wave--front svg{animation:waveBreathFront 16s ease-in-out infinite; transform-origin:50% 100%;}
+
+    .wrap{max-width:1120px;margin:0 auto;padding:0 5vw}
+    @media (min-width: 1400px){ .wrap{ max-width: 1320px; } }
+    @media (min-width: 1700px){ .wrap{ max-width: 1480px; } }
+    @media (min-width: 2000px){ .wrap{ max-width: 1620px; } }
+
+    .news{ margin: 34px auto 70px; display:grid; gap: 18px; }
+    .section-card{background:rgba(255,255,255,.9);border-radius:20px;box-shadow:0 8px 26px rgba(0,0,0,.10);border: 1px solid rgba(14,47,54,.08);padding:18px;}
+    .section-head{margin-bottom: 12px;}
+    .section-title{margin:0;font-size: clamp(1.4rem, 1.05rem + 0.9vw, 1.9rem);font-weight:900;color:#0b2f39;text-shadow:0 1px 0 rgba(255,255,255,.25);}
+
+    .news-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top: 10px;}
+
+    .news-card{width:100%;background: rgba(255,255,255,.94);border-radius: var(--card-r);box-shadow: 0 10px 22px rgba(0,0,0,.10);border: 1px solid rgba(14,47,54,.08);overflow:hidden;display:flex;flex-direction:column;position:relative;}
+    .news-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width: var(--accent-w);background: transparent;}
+    .news-card.press::before{ background: var(--prolium-green); }
+    .news-card.feature::before{ background: var(--prolium-blue); }
+
+    .news-card-inner{padding: 18px 18px 16px;display:flex;flex-direction:column;gap:12px;height:100%;padding-left: calc(18px + var(--accent-w));}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:#21525d;font-weight:800;font-size: calc(var(--step--1) * 1.02);}
+    .muted{opacity:.78;font-weight:800;font-size: calc(var(--step--1) * 1.02);}
+    .news-title{margin:0;font-weight: 900;letter-spacing:-0.01em;color:#0e2f36;font-size: clamp(1.10rem, 0.95rem + 0.55vw, 1.45rem);line-height:1.25;}
+    .news-desc{margin:0;color:#21525d;font-weight: 650;font-size: calc(var(--step--1) * 1.08);max-width: 80ch;}
+
+    .news-actions{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-top: 2px;}
+    .news-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight: 900;color:#064d8b;padding: 10px 12px;border-radius: 12px;background: rgba(255,255,255,.78);border: 1px solid rgba(6,77,139,.16);transition: transform .12s ease, background .16s ease;white-space:nowrap;}
+    .news-link:hover{transform: translateY(-1px); background: rgba(243,247,251,.95);}
+
+    .logo-badge{width: 46px;height: 46px;border-radius: 14px;background: rgba(255,255,255,.90);border: 1px solid rgba(14,47,54,.10);box-shadow: 0 6px 14px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;overflow:hidden;flex: 0 0 auto;}
+    .logo-badge img{width: 78%;height: 78%;object-fit: contain;display:block;}
+
+    .cta{text-align:center;margin:72px 0 36px}
+    .cta-link{color:#fff;background: var(--prolium-green);font-weight:800;padding:14px 30px;font-size:var(--step--1);text-decoration:none;display:inline-block;border-radius:9999px;transition: filter .14s ease, transform .12s ease;}
+    .cta-link:hover{filter:brightness(0.96); transform: translateY(-1px);}
+
+    .nav-links a:focus-visible,.drawer a:focus-visible,.nav-toggle:focus-visible,.news-link:focus-visible,.cta-link:focus-visible,button:focus-visible{outline:3px solid rgba(99,197,237,.65);outline-offset:2px;}
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+    img{max-width:100%;height:auto}
+  
+
+/* LinkedIn icon (square, Prolium blue) */
+.nav-links a.nav-social.linkedin{
+  padding:0 !important;
+  margin:0 !important;
+  width:34px;
+  height:34px;
+  border-radius:4px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background: var(--prolium-blue);
+  color:#fff;
+  line-height:1;
+  flex:0 0 auto;
+}
+.nav-links a.nav-social.linkedin svg{ width:19px; height:19px; display:block; }
+.nav-links a.nav-social.linkedin:hover{ filter: brightness(0.96); }
+</style>
+</head>
+<body>
+<nav aria-label="Primary" class="nav" role="navigation">
+<div class="nav-brand"><a href="/" style="display:flex;align-items:center;gap:14px;text-decoration:none"><img alt="Prolium Logo" class="nav-logo" src="Logo.png"/></a></div>
+<div aria-label="Primary links" class="nav-links">
+<a href="/">Home</a>
+<a href="/science">Science &amp; Pipeline</a>
+<a href="/about">About</a>
+<a class="active" href="/news">News</a>
+<a href="/contact">Contact</a>
+<a aria-label="Prolium on LinkedIn" class="nav-social linkedin" href="https://www.linkedin.com/company/prolium-bio/" rel="noopener" target="_blank"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 23.5h4V7.98h-4V23.5ZM8.5 7.98h3.83v2.12h.05c.53-1 1.83-2.12 3.77-2.12 4.03 0 4.78 2.65 4.78 6.1v9.42h-4v-8.36c0-1.99-.04-4.56-2.78-4.56-2.78 0-3.2 2.17-3.2 4.42v8.5h-4V7.98Z" fill="currentColor"></path></svg></a></div>
+<button aria-expanded="false" aria-label="Menu" class="nav-toggle">☰</button>
+</nav>
+<div aria-label="Mobile menu" aria-modal="true" class="drawer" id="drawer" role="dialog">
+<a href="/">Home</a><a href="/science">Science &amp; Pipeline</a><a href="/about">About</a><a class="active" href="/news">News</a><a href="/contact">Contact</a>
+<a href="https://www.linkedin.com/company/prolium-bio/" rel="noopener" target="_blank">LinkedIn</a></div>
+<header aria-label="Prolium News" class="hero">
+<div class="hero-content">
+<h1 class="hero-title">News</h1>
+<p class="hero-desc">Press releases and select coverage featuring Prolium Bioscience.</p>
+</div>
+<div aria-hidden="true" class="wave-wrap">
+<div class="wave wave--back">
+<svg preserveaspectratio="none" viewbox="0 0 1440 540">
+<defs><lineargradient id="bgBlue" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#74add6"></stop><stop offset="1" stop-color="#74add6"></stop></lineargradient></defs>
+<path d="M0,200 C180,160 320,110 540,180 C760,250 870,245 1040,160 C1210,80 1350,60 1440,100 L1440,540 L0,540 Z" fill="url(#bgBlue)"></path>
+</svg>
+</div>
+<div class="wave wave--front">
+<svg aria-hidden="true" preserveaspectratio="none" viewbox="0 0 1440 540">
+<path d="M0,360 C260,480 420,410 680,370 C940,330 1110,360 1300,440 C1370,470 1410,500 1440,520 L1440,540 L0,540 Z" fill="#21c036"></path>
+</svg>
+</div>
+</div>
+</header>
+<main class="wrap">
+<section aria-label="News sections" class="news">
+<section aria-labelledby="press-title" class="section-card">
+<div class="section-head"><h2 class="section-title" id="press-title">Press Releases</h2></div>
+<div class="news-grid" id="press-grid">
+<article class="news-card press">
+<div class="news-card-inner">
+<div class="meta"><span class="muted">Mar 3, 2026</span></div>
+<h3 class="news-title">Prolium Bioscience Launches with $50 Million and Announces First Patients Dosed with PRO-203</h3>
+<p class="news-desc">Launch announcement and initial clinical progress for PRO-203, a potential best-in-class CD20×CD3 T-cell engager for severe autoimmune disease.</p>
+<div class="news-actions">
+<a class="news-link" href="https://www.globenewswire.com/news-release/2026/03/03/3248259/0/en/Prolium-Bioscience-Launches-with-50-Million-and-Announces-First-Patients-Dosed-with-PRO-203-a-Potential-Best-in-Class-CD20xCD3-T-Cell-Engager-for-Severe-Autoimmune-Disease.html" rel="noopener" target="_blank">Read press release <span aria-hidden="true">→</span></a>
+<span aria-hidden="true" class="logo-badge"><img alt="" src="TabLogo.png"/></span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<section aria-labelledby="featured-title" class="section-card">
+<div class="section-head"><h2 class="section-title" id="featured-title">Featured in the News</h2></div>
+<div class="news-grid" id="featured-grid">
+<article class="news-card feature">
+<div class="news-card-inner">
+<div class="meta"><span class="muted">May 2026</span></div>
+<h3 class="news-title">Endpoints News: Biotech has a new company model — a small team, a big check and a few Chinese assets</h3>
+<p class="news-desc">Endpoints explores the “NewCo” startup model; Prolium is featured in the discussion of how this approach is playing out in practice.</p>
+<div class="news-actions">
+<a class="news-link" href="https://endpoints.news/biotech-has-a-new-startup-model-small-team-big-check-and-chinese-assets/" rel="noopener" target="_blank">Read article <span aria-hidden="true">↗</span></a>
+<span aria-hidden="true" class="logo-badge"><img alt="" src="endpoints.png"/></span>
+</div>
+</div>
+</article>
+<article class="news-card feature">
+<div class="news-card-inner">
+<div class="meta"><span class="muted">Mar 10, 2026</span></div>
+<h3 class="news-title">Nature Biotechnology: B cell depletion in autoimmune disease — in vivo CAR‑T or T cell engagers?</h3>
+<p class="news-desc">A Nature Biotechnology news feature examining modalities for deep B-cell depletion in autoimmune disease, including T-cell engager approaches.</p>
+<div class="news-actions">
+<a class="news-link" href="https://www.nature.com/articles/s41587-026-03069-5" rel="noopener" target="_blank">Read article <span aria-hidden="true">↗</span></a>
+<span aria-hidden="true" class="logo-badge"><img alt="" src="nature.png"/></span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<div aria-label="Contact Prolium" class="cta"><a class="cta-link" href="/contact">Contact Prolium</a></div>
+</section>
+</main>
+<script>
+    const toggle=document.querySelector('.nav-toggle');
+    const drawer=document.getElementById('drawer');
+    toggle?.addEventListener('click', ()=>{
+      const open = !drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    const nav = document.querySelector('.nav');
+    const setShadow = () => { if (window.scrollY > 4) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); };
+    setShadow();
+    window.addEventListener('scroll', setShadow, { passive: true });
+  </script>
+</body>
+</html>
